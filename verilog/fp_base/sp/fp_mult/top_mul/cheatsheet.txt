@@ -1,0 +1,8 @@
+To run float to hex converstion in python
+Interactive:
+python
+>>from f2h import f2h
+>>f2h(1)
+'0x3f800000'
+
+That's it!
