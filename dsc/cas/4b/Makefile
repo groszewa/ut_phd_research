@@ -39,7 +39,7 @@
 
 
 
-NAME_TOP	:= dsc_mul
+NAME_TOP	:= cas
 USERNAME	:= $(shell whoami)
 DIR_TMP		:= /tmp/$(USERNAME)verilog
 

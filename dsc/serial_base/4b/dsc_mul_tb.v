@@ -144,8 +144,11 @@ always
   initial
     begin
 
-       //$dumpfile ("dsc_mul_tb.dump");
-       //$dumpvars(0,dsc_mul_tb);
+       //need vcd for power simulation
+       $dumpfile ("dsc_mul_tb.vcd");
+       $dumpvars(0,dsc_mul_tb);
+
+       //need vpd for better viewing
        $vcdplusfile("dsc_mul_tb.vpd");
        $vcdpluson(0,dsc_mul_tb);
        

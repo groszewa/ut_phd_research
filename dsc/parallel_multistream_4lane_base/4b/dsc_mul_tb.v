@@ -3,7 +3,7 @@
 `define NUM_TESTS 1000
 
 
-module dsc_mul_es_imp_tb ();
+module dsc_mul_tb ();
 //--------------------------------------------------------- // inputs to the DUT are reg type
    reg clk_50;
    reg en;
@@ -111,7 +111,7 @@ module dsc_mul_es_imp_tb ();
 /////  .overflow(bin_out_overflow)
 /////);
 
-dsc_mul_es_imp dut (
+dsc_mul dut (
   .clk(clk_50),
   .rst(rst),
   .en(en),
@@ -144,10 +144,13 @@ always
   initial
     begin
 
-       $dumpfile ("dsc_mul_es_imp_tb.vcd");
-       $dumpvars(0,dsc_mul_es_imp_tb);
-       $vcdplusfile("dsc_mul_es_imp_tb.vpd");
-       $vcdpluson(0,dsc_mul_es_imp_tb);
+       //need vcd for power simulation
+       $dumpfile ("dsc_mul_tb.vcd");
+       $dumpvars(0,dsc_mul_tb);
+
+       //need vpd for better viewing
+       $vcdplusfile("dsc_mul_tb.vpd");
+       $vcdpluson(0,dsc_mul_tb);
        
        
     $display($time, " << Starting the Simulation >>");
@@ -184,6 +187,10 @@ always
             //time_start = $time;
             expected_result = input_bin_a * input_bin_b;
             
+
+            //ajgrosze - temp
+            //#2000
+            //$finish;
             
             
             
@@ -266,13 +273,13 @@ always
     //         en, 
     //         input_bin_a, 
     //         input_bin_b, 
-    //         dsc_mul_es_imp_tb.dut.prg_a.ctr4_out, 
-    //         dsc_mul_es_imp_tb.dut.prg_b.ctr4_out, 
-    //         dsc_mul_es_imp_tb.dut.ctr_ov_a, 
-    //         dsc_mul_es_imp_tb.dut.ctr_ov_b, 
-    //         dsc_mul_es_imp_tb.dut.sn_out_a,
-    //         dsc_mul_es_imp_tb.dut.sn_out_b,
-    //         dsc_mul_es_imp_tb.dut.sn_out_mul,
+    //         dsc_mul_tb.dut.prg_a.ctr4_out, 
+    //         dsc_mul_tb.dut.prg_b.ctr4_out, 
+    //         dsc_mul_tb.dut.ctr_ov_a, 
+    //         dsc_mul_tb.dut.ctr_ov_b, 
+    //         dsc_mul_tb.dut.sn_out_a,
+    //         dsc_mul_tb.dut.sn_out_b,
+    //         dsc_mul_tb.dut.sn_out_mul,
     //         bin_out);
     
     

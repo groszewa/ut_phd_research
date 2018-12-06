@@ -147,7 +147,6 @@ clean:
 	rm -rf $(NAME_TOP).daidir
 	rm -rf simv
 	rm -rf ${NAME_TOP}_tb.vpd
-	rm -rf ${NAME_TOP}_tb.vcd
 
 cleanall: clean
 	rm -f  $(NAME_TOP).log

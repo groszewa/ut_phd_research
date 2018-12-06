@@ -3,13 +3,15 @@
 `define NUM_TESTS 1000
 
 
-module dsc_mul_es_imp_tb ();
+module cas_tb ();
 //--------------------------------------------------------- // inputs to the DUT are reg type
    reg clk_50;
-   reg en;
-   reg rst;
+   //reg en;
+   //reg rst;
 
    reg [3:0] input_bin_a, input_bin_b;
+   wire [3:0] output_bin_gt, output_bin_lt;
+   
    
    
    
@@ -24,17 +26,17 @@ module dsc_mul_es_imp_tb ();
    
    //wire           sn_out_a,sn_out_b,sn_mul_out;
 
-   wire [7:0]     bin_out;
+   //wire [7:0]     bin_out;
    //wire           bin_out_overflow;
-   wire           op_finished;
+   //wire           op_finished;
 
    //wire [7:0]     expected;
-   shortint       expected_result;
+   //shortint       expected_result;
    //int            cycle_count;
    //int            time_start,time_end;
 
-   wire [15:0]    cycle_count;
-   wire           cycle_count_overflow;
+   //wire [15:0]    cycle_count;
+   //wire           cycle_count_overflow;
    
    
             
@@ -43,7 +45,7 @@ module dsc_mul_es_imp_tb ();
    
 
    integer        i;
-   real            cycle_count_acc;
+   //real            cycle_count_acc;
             
    
            
@@ -111,26 +113,34 @@ module dsc_mul_es_imp_tb ();
 /////  .overflow(bin_out_overflow)
 /////);
 
-dsc_mul_es_imp dut (
-  .clk(clk_50),
-  .rst(rst),
-  .en(en),
+///dsc_mul dut (
+///  .clk(clk_50),
+///  .rst(rst),
+///  .en(en),
+///  .a(input_bin_a),
+///  .b(input_bin_b),
+///  .z(bin_out),
+///  .ov(op_finished)
+///);
+
+cas dut (
   .a(input_bin_a),
   .b(input_bin_b),
-  .z(bin_out),
-  .ov(op_finished)
+  .gt_out(output_bin_gt),
+  .lt_out(output_bin_lt)
 );
+   
    
 //count number of clock cycles here
 //TODO//                   
 
-counter #(.WIDTH(16)) cycle_counter (
-  .clk(clk_50),
-  .rst(rst),
-  .en(en),
-  .out(cycle_count),
-  .overflow(cycle_count_overflow)
-);
+///counter #(.WIDTH(16)) cycle_counter (
+///  .clk(clk_50),
+///  .rst(rst),
+///  .en(en),
+///  .out(cycle_count),
+///  .overflow(cycle_count_overflow)
+///);
    
 
 
@@ -144,27 +154,30 @@ always
   initial
     begin
 
-       $dumpfile ("dsc_mul_es_imp_tb.vcd");
-       $dumpvars(0,dsc_mul_es_imp_tb);
-       $vcdplusfile("dsc_mul_es_imp_tb.vpd");
-       $vcdpluson(0,dsc_mul_es_imp_tb);
+       //need vcd for power simulation
+       $dumpfile ("cas_tb.vcd");
+       $dumpvars(0,cas_tb);
+
+       //need vpd for better viewing
+       $vcdplusfile("cas_tb.vpd");
+       $vcdpluson(0,cas_tb);
        
        
     $display($time, " << Starting the Simulation >>");
        clk_50 = 0;
-       en = 0;
-       rst = 1;
+       //en = 0;
+       //rst = 1;
        input_bin_a = 0;
        input_bin_b = 0;
        
        
-       #10
-       rst = 0;
+       //#10
+       //rst = 0;
        
-       #10
-       en  = 1;
-       input_bin_a = 15;
-       input_bin_b = 15;
+       //#10
+       //en  = 1;
+       //input_bin_a = 15;
+       //input_bin_b = 15;
 
        for(i=0;i<`NUM_TESTS;i=i+1)
          begin
@@ -172,8 +185,8 @@ always
             input_bin_a = $random();
             input_bin_b = $random();
             
-            #10 rst = 0;
-            #10 en = 1;
+            //#10 rst = 0;
+            //#10 en = 1;
 
            //@(posedge clk_50)
            //  begin
@@ -182,32 +195,32 @@ always
            //  end
 
             //time_start = $time;
-            expected_result = input_bin_a * input_bin_b;
+            //expected_result = input_bin_a * input_bin_b;
             
             
             
             
-            wait(op_finished);
+            //wait(clk_50);
             //time_end = $time;
             #20
             
             //expected_result = input_bin_a * input_bin_b;
             //cycle_count = time_end - time_start;
-            cycle_count_acc += cycle_count;
+            //cycle_count_acc += cycle_count;
             
             
-            $display("Test %d : a=%d, b=%d, z=%d, cycle_count=%d",i,input_bin_a,input_bin_b,bin_out,cycle_count);
+            $display("Test %d : a=%d, b=%d, a_sub_b=%d, lt=%d, gt=%d",i,input_bin_a, input_bin_b, cas_tb.dut.a_sub_b, output_bin_lt ,output_bin_gt);
             
 
-            if(expected_result != bin_out) begin
-               $display("ERROR : a=%d, b=%d, z=%d, expected=%d",input_bin_a,input_bin_b,bin_out,expected_result);
+            if(output_bin_lt > output_bin_gt) begin
+               $display("ERROR : lt = %d, gt = %d", output_bin_lt,output_bin_gt);
             end
             
             
             //$display("alex : expected : %d * %d = %d", input_bin_a, input_bin_b, expected_result);
             //$display("alex : obtained : %d",bin_out);
-            rst = 1;
-            en  = 0;
+            //rst = 1;
+            //en  = 0;
             //cycle_count = 0;
             
             
@@ -242,7 +255,7 @@ always
     //wait ({a,b,par,c} == 10'b1111111111)
     //#1000
        
-    $display("Average cycle time : %f",cycle_count_acc/`NUM_TESTS);
+    //$display("Average cycle time : %f",cycle_count_acc/`NUM_TESTS);
     $display(" << Simulation Complete >> ");
        
     //$stop; // stop the simulation
@@ -266,13 +279,13 @@ always
     //         en, 
     //         input_bin_a, 
     //         input_bin_b, 
-    //         dsc_mul_es_imp_tb.dut.prg_a.ctr4_out, 
-    //         dsc_mul_es_imp_tb.dut.prg_b.ctr4_out, 
-    //         dsc_mul_es_imp_tb.dut.ctr_ov_a, 
-    //         dsc_mul_es_imp_tb.dut.ctr_ov_b, 
-    //         dsc_mul_es_imp_tb.dut.sn_out_a,
-    //         dsc_mul_es_imp_tb.dut.sn_out_b,
-    //         dsc_mul_es_imp_tb.dut.sn_out_mul,
+    //         dsc_mul_tb.dut.prg_a.ctr4_out, 
+    //         dsc_mul_tb.dut.prg_b.ctr4_out, 
+    //         dsc_mul_tb.dut.ctr_ov_a, 
+    //         dsc_mul_tb.dut.ctr_ov_b, 
+    //         dsc_mul_tb.dut.sn_out_a,
+    //         dsc_mul_tb.dut.sn_out_b,
+    //         dsc_mul_tb.dut.sn_out_mul,
     //         bin_out);
     
     
@@ -285,7 +298,8 @@ always
     //   a = a+1;
     // end
      
-  end
+ end // initial begin
+   
 //-------------------------------------------------------------- // The load_count task loads the counter with the value passed
 //  task load_count;
 //     input [3:0] load_value;

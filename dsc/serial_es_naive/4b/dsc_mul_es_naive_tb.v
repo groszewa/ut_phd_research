@@ -144,8 +144,8 @@ always
   initial
     begin
 
-       //$dumpfile ("dsc_mul_es_naive_tb.dump");
-       //$dumpvars(0,dsc_mul_es_naive_tb);
+       $dumpfile ("dsc_mul_es_naive_tb.vcd");
+       $dumpvars(0,dsc_mul_es_naive_tb);
        $vcdplusfile("dsc_mul_es_naive_tb.vpd");
        $vcdpluson(0,dsc_mul_es_naive_tb);
        
