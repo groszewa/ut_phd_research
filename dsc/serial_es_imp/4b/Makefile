@@ -116,6 +116,7 @@ compile:
 run:
 	./$(NAME_TOP)
 
+
 # Start viewer
 viewer:
 	dve -full64  -vpd ${NAME_TOP}_tb.vpd -script session_settings.tcl &
@@ -147,6 +148,7 @@ clean:
 	rm -rf $(NAME_TOP).daidir
 	rm -rf simv
 	rm -rf ${NAME_TOP}_tb.vpd
+	rm -rf ${NAME_TOP}_tb.vcd
 
 cleanall: clean
 	rm -f  $(NAME_TOP).log
