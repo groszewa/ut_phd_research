@@ -1,0 +1,71 @@
+{
+    "Modules": {
+        "...MASTER...": {},
+        "std": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "dsc_mul_tb": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "FA": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        }
+    },
+    "CompUnits": {
+        "amcQw_d": {
+            "mod": "...MASTER...",
+            "out": "objs/amcQw_d.o",
+            "checksum": 4294967295,
+            "mode": 4,
+            "bytes": 7303
+        },
+        "VDQdt_d": {
+            "mod": "FA",
+            "out": "VDQdt_d.o",
+            "checksum": 4294967295,
+            "mode": 4,
+            "bytes": 8557,
+            "archive": "archive.0/_27177_archive_1.a"
+        },
+        "reYIK_d": {
+            "mod": "std",
+            "out": "reYIK_d.o",
+            "checksum": 4294967295,
+            "mode": 4,
+            "bytes": 29312,
+            "archive": "archive.0/_27177_archive_1.a"
+        },
+        "HEVRH_d": {
+            "mod": "dsc_mul_tb",
+            "out": "HEVRH_d.o",
+            "checksum": 4294967295,
+            "mode": 4,
+            "bytes": 40782,
+            "archive": "archive.0/_27177_archive_1.a"
+        }
+    },
+    "reusePaths": {},
+    "ObjArchives": [
+        {
+            "objects": [
+                [
+                    "reYIK_d.o",
+                    29312
+                ],
+                [
+                    "HEVRH_d.o",
+                    40782
+                ],
+                [
+                    "VDQdt_d.o",
+                    8557
+                ]
+            ],
+            "archive": "archive.0/_27177_archive_1.a",
+            "size": 78651
+        }
+    ]
+}

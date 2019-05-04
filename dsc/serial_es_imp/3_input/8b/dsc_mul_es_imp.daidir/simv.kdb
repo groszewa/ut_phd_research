@@ -1,0 +1,9 @@
+rc file Version 1.0
+
+[Design]
+COMPILE_PATH=/misc/scratch/ajgrosze/ut_phd_research/dsc/serial_es_imp/2_input/4b
+SystemC=FALSE
+UUM=FALSE
+KDB=FALSE
+USE_NOVAS_HOME=FALSE
+TOP=dsc_mul_es_imp_tb dsc_mul shift_reg_rotate_4b_full comp_2b prg_4b prg_6b prg_8b prg_10b prg_4b_by2 par_sr_mul par_mul_ms_4lane ctr_out_bank_16b par_accum_4b_4lanes 

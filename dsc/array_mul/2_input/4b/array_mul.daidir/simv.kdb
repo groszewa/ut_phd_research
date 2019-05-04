@@ -1,0 +1,9 @@
+rc file Version 1.0
+
+[Design]
+COMPILE_PATH=/misc/scratch/ajgrosze/ut_phd_research/dsc/array_mul/2_input/4b
+SystemC=FALSE
+UUM=FALSE
+KDB=FALSE
+USE_NOVAS_HOME=FALSE
+TOP=dsc_mul_tb 

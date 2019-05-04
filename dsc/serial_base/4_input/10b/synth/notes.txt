@@ -1,0 +1,23 @@
+no opt
+timing 658
+area 116
+power 34320
+
+opt high
+timing 663
+area 112
+power 33125
+
+opt high csa_opt high
+timing 663
+area 112
+power 33125
+
+csa_opt high
+timing 658
+area 116
+power 34320
+
+high opt then again with incr 
+timing 663
+area  112

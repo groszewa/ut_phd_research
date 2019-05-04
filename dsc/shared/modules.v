@@ -200,6 +200,39 @@ module comp_4b (
 endmodule // comp_4b
 
 
+module comp_6b (
+	a_gt_b,
+	a,
+    b
+);
+
+   output       a_gt_b;
+   input  [5:0] a,b;
+
+   wire [5:0]   e,agt;
+
+   wire         e54,e53,e52,e51;
+   
+
+   comp_1b comp0(.a(a[0]),.b(b[0]),.equal(e[0]),.a_larger(agt[0]));
+   comp_1b comp1(.a(a[1]),.b(b[1]),.equal(e[1]),.a_larger(agt[1]));
+   comp_1b comp2(.a(a[2]),.b(b[2]),.equal(e[2]),.a_larger(agt[2]));
+   comp_1b comp3(.a(a[3]),.b(b[3]),.equal(e[3]),.a_larger(agt[3]));
+   comp_1b comp4(.a(a[4]),.b(b[4]),.equal(e[4]),.a_larger(agt[4]));
+   comp_1b comp5(.a(a[5]),.b(b[5]),.equal(e[5]),.a_larger(agt[5]));
+
+   assign e54 = e[5] & e[4];
+   assign e53 = e54  & e[3];
+   assign e52 = e53  & e[2];
+   assign e51 = e52  & e[1];
+   
+   assign a_gt_b = agt[5] | (agt[4] & e[5]) | (agt[3] & e54) | (agt[2] & e53) | (agt[1] & e52) | (agt[0] & e51);
+   
+
+endmodule // comp_6b
+
+
+
 module comp_8b (
 	a_gt_b,
 	a,
@@ -235,6 +268,46 @@ module comp_8b (
 
 endmodule // comp_8b
 
+module comp_10b (
+	a_gt_b,
+	a,
+    b
+);
+
+   output       a_gt_b;
+   input  [9:0] a,b;
+
+   wire [9:0]   e,agt;
+
+   wire         e87,e86,e85,e84,e83,e82, e81;
+   
+
+   comp_1b comp0(.a(a[0]),.b(b[0]),.equal(e[0]),.a_larger(agt[0]));
+   comp_1b comp1(.a(a[1]),.b(b[1]),.equal(e[1]),.a_larger(agt[1]));
+   comp_1b comp2(.a(a[2]),.b(b[2]),.equal(e[2]),.a_larger(agt[2]));
+   comp_1b comp3(.a(a[3]),.b(b[3]),.equal(e[3]),.a_larger(agt[3]));
+   comp_1b comp4(.a(a[4]),.b(b[4]),.equal(e[4]),.a_larger(agt[4]));
+   comp_1b comp5(.a(a[5]),.b(b[5]),.equal(e[5]),.a_larger(agt[5]));
+   comp_1b comp6(.a(a[6]),.b(b[6]),.equal(e[6]),.a_larger(agt[6]));
+   comp_1b comp7(.a(a[7]),.b(b[7]),.equal(e[7]),.a_larger(agt[7]));
+   comp_1b comp8(.a(a[8]),.b(b[8]),.equal(e[8]),.a_larger(agt[8]));
+   comp_1b comp9(.a(a[9]),.b(b[9]),.equal(e[9]),.a_larger(agt[9]));
+
+   assign e98 = e[9] & e[8];
+   assign e97 = e98  & e[7];
+   assign e96 = e97  & e[6];
+   assign e95 = e96  & e[5];
+   assign e94 = e95  & e[4];
+   assign e93 = e94  & e[3];
+   assign e92 = e93  & e[2];
+   assign e91 = e92  & e[1];
+   
+   
+   assign a_gt_b = agt[9] | (agt[8] & e[9]) | (agt[7] & e98) | (agt[6] & e97) | (agt[5] & e96) | (agt[4] & e95) | (agt[3] & e94) | (agt[2] & e93) | (agt[1] & e92) | (agt[0] & e91);
+   
+
+endmodule // comp_10b
+
 
 module prg_4b (
 	clk,
@@ -267,6 +340,103 @@ counter #(
 comp_4b     comp4 (.a(bin_in), .b(ctr4_out), .a_gt_b(sn_out));
 
 endmodule // prg_4b
+
+module prg_6b (
+	clk,
+    rst,
+    en,
+    bin_in,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in;
+   output      sn_out,ctr_overflow;
+
+   wire [5:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (6)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_6b     comp6 (.a(bin_in), .b(ctr4_out), .a_gt_b(sn_out));
+
+endmodule // prg_6b
+
+module prg_8b (
+	clk,
+    rst,
+    en,
+    bin_in,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in;
+   output      sn_out,ctr_overflow;
+
+   wire [7:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (8)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_8b     comp8 (.a(bin_in), .b(ctr4_out), .a_gt_b(sn_out));
+
+endmodule // prg_8b
+
+module prg_10b (
+	clk,
+    rst,
+    en,
+    bin_in,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in;
+   output      sn_out,ctr_overflow;
+
+   wire [9:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (10)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_10b     comp10 (.a(bin_in), .b(ctr4_out), .a_gt_b(sn_out));
+
+endmodule // prg_10b
+
 
 
 module prg_4b_dual (
@@ -305,6 +475,451 @@ comp_4b     comp4_b (.a(bin_in_b), .b(ctr4_out), .a_gt_b(sn_out_b));
 
 endmodule // prg_4b_dual
 
+module prg_4b_trip (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                
+    sn_out_a,
+    sn_out_b, 
+    sn_out_c,               
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [3:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out_a,sn_out_b,sn_out_c,ctr_overflow;
+
+   wire [3:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (4)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_4b     comp4_a (.a(bin_in_a), .b(ctr4_out), .a_gt_b(sn_out_a));
+comp_4b     comp4_b (.a(bin_in_b), .b(ctr4_out), .a_gt_b(sn_out_b));
+comp_4b     comp4_c (.a(bin_in_c), .b(ctr4_out), .a_gt_b(sn_out_c));
+   
+   
+
+endmodule // prg_4b_trip
+
+module prg_4b_quad (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c, 
+    bin_in_d,
+    sn_out_a,
+    sn_out_b, 
+    sn_out_c,  
+    sn_out_d,             
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [3:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out_a,sn_out_b,sn_out_c,sn_out_d,ctr_overflow;
+
+   wire [3:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (4)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_4b     comp4_a (.a(bin_in_a), .b(ctr4_out), .a_gt_b(sn_out_a));
+comp_4b     comp4_b (.a(bin_in_b), .b(ctr4_out), .a_gt_b(sn_out_b));
+comp_4b     comp4_c (.a(bin_in_c), .b(ctr4_out), .a_gt_b(sn_out_c));
+comp_4b     comp4_d (.a(bin_in_d), .b(ctr4_out), .a_gt_b(sn_out_d));
+   
+   
+
+endmodule // prg_4b_quad
+
+module prg_6b_quad (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c, 
+    bin_in_d,
+    sn_out_a,
+    sn_out_b, 
+    sn_out_c,  
+    sn_out_d,             
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out_a,sn_out_b,sn_out_c,sn_out_d,ctr_overflow;
+
+   wire [5:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (6)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_6b     comp6_a (.a(bin_in_a), .b(ctr4_out), .a_gt_b(sn_out_a));
+comp_6b     comp6_b (.a(bin_in_b), .b(ctr4_out), .a_gt_b(sn_out_b));
+comp_6b     comp6_c (.a(bin_in_c), .b(ctr4_out), .a_gt_b(sn_out_c));
+comp_6b     comp6_d (.a(bin_in_d), .b(ctr4_out), .a_gt_b(sn_out_d));
+   
+   
+
+endmodule // prg_6b_quad
+
+
+module prg_8b_quad (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c, 
+    bin_in_d,
+    sn_out_a,
+    sn_out_b, 
+    sn_out_c,  
+    sn_out_d,             
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out_a,sn_out_b,sn_out_c,sn_out_d,ctr_overflow;
+
+   wire [7:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (8)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_8b     comp8_a (.a(bin_in_a), .b(ctr4_out), .a_gt_b(sn_out_a));
+comp_8b     comp8_b (.a(bin_in_b), .b(ctr4_out), .a_gt_b(sn_out_b));
+comp_8b     comp8_c (.a(bin_in_c), .b(ctr4_out), .a_gt_b(sn_out_c));
+comp_8b     comp8_d (.a(bin_in_d), .b(ctr4_out), .a_gt_b(sn_out_d));
+   
+   
+
+endmodule // prg_8b_quad
+
+
+module prg_10b_quad (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c, 
+    bin_in_d,
+    sn_out_a,
+    sn_out_b, 
+    sn_out_c,  
+    sn_out_d,             
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out_a,sn_out_b,sn_out_c,sn_out_d,ctr_overflow;
+
+   wire [9:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (10)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_10b     comp10_a (.a(bin_in_a), .b(ctr4_out), .a_gt_b(sn_out_a));
+comp_10b     comp10_b (.a(bin_in_b), .b(ctr4_out), .a_gt_b(sn_out_b));
+comp_10b     comp10_c (.a(bin_in_c), .b(ctr4_out), .a_gt_b(sn_out_c));
+comp_10b     comp10_d (.a(bin_in_d), .b(ctr4_out), .a_gt_b(sn_out_d));
+   
+   
+
+endmodule // prg_10b_quad
+
+
+module prg_6b_trip (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                
+    sn_out_a,
+    sn_out_b, 
+    sn_out_c,               
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out_a,sn_out_b,sn_out_c,ctr_overflow;
+
+   wire [5:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (6)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_6b     comp6_a (.a(bin_in_a), .b(ctr4_out), .a_gt_b(sn_out_a));
+comp_6b     comp6_b (.a(bin_in_b), .b(ctr4_out), .a_gt_b(sn_out_b));
+comp_6b     comp6_c (.a(bin_in_c), .b(ctr4_out), .a_gt_b(sn_out_c));
+   
+   
+
+endmodule // prg_6b_trip
+
+module prg_8b_trip (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                
+    sn_out_a,
+    sn_out_b, 
+    sn_out_c,               
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out_a,sn_out_b,sn_out_c,ctr_overflow;
+
+   wire [7:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (8)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_8b     comp8_a (.a(bin_in_a), .b(ctr4_out), .a_gt_b(sn_out_a));
+comp_8b     comp8_b (.a(bin_in_b), .b(ctr4_out), .a_gt_b(sn_out_b));
+comp_8b     comp8_c (.a(bin_in_c), .b(ctr4_out), .a_gt_b(sn_out_c));
+   
+   
+
+endmodule // prg_8b_trip
+
+module prg_10b_trip (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                
+    sn_out_a,
+    sn_out_b, 
+    sn_out_c,               
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out_a,sn_out_b,sn_out_c,ctr_overflow;
+
+   wire [9:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (10)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_10b     comp10_a (.a(bin_in_a), .b(ctr4_out), .a_gt_b(sn_out_a));
+comp_10b     comp10_b (.a(bin_in_b), .b(ctr4_out), .a_gt_b(sn_out_b));
+comp_10b     comp10_c (.a(bin_in_c), .b(ctr4_out), .a_gt_b(sn_out_c));
+   
+   
+
+endmodule // prg_10b_trip
+
+
+
+module prg_6b_dual (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    sn_out_a,
+    sn_out_b,                
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in_a,bin_in_b;
+   output      sn_out_a,sn_out_b,ctr_overflow;
+
+   wire [5:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (6)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_6b     comp6_a (.a(bin_in_a), .b(ctr4_out), .a_gt_b(sn_out_a));
+comp_6b     comp6_b (.a(bin_in_b), .b(ctr4_out), .a_gt_b(sn_out_b));
+   
+
+endmodule // prg_6b_dual
+
+module prg_8b_dual (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    sn_out_a,
+    sn_out_b,                
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in_a,bin_in_b;
+   output      sn_out_a,sn_out_b,ctr_overflow;
+
+   wire [7:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (8)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_8b     comp8_a (.a(bin_in_a), .b(ctr4_out), .a_gt_b(sn_out_a));
+comp_8b     comp8_b (.a(bin_in_b), .b(ctr4_out), .a_gt_b(sn_out_b));
+   
+
+endmodule // prg_8b_dual
+
+module prg_10b_dual (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    sn_out_a,
+    sn_out_b,                
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in_a,bin_in_b;
+   output      sn_out_a,sn_out_b,ctr_overflow;
+
+   wire [9:0]  ctr4_out;
+   
+   
+
+counter #(
+   .WIDTH (10)
+) ctr4 (
+  .clk(clk),
+  .rst(rst),
+  .en(en),
+  .out(ctr4_out),
+  .overflow(ctr_overflow)
+);
+
+
+comp_10b     comp10_a (.a(bin_in_a), .b(ctr4_out), .a_gt_b(sn_out_a));
+comp_10b     comp10_b (.a(bin_in_b), .b(ctr4_out), .a_gt_b(sn_out_b));
+   
+
+endmodule // prg_10b_dual
+
 
 
 module prg_4b_max (
@@ -340,6 +955,429 @@ dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
   
 endmodule // prg_4b_max
 
+module prg_4b_3in_max (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                   
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [3:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c;
+   
+   
+   
+
+
+
+prg_4b_trip     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a | sn_out_b | sn_out_c;
+   
+   
+  
+endmodule // prg_4b_3in_max
+
+module prg_4b_4in_max (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [3:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_4b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a | sn_out_b | sn_out_c | sn_out_d;
+   
+   
+  
+endmodule // prg_4b_4in_max
+
+
+module prg_6b_4in_max (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_6b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a | sn_out_b | sn_out_c | sn_out_d;
+   
+   
+  
+endmodule // prg_6b_4in_max
+
+module prg_8b_4in_max (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_8b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a | sn_out_b | sn_out_c | sn_out_d;
+   
+   
+  
+endmodule // prg_8b_4in_max
+
+module prg_10b_4in_max (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_10b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a | sn_out_b | sn_out_c | sn_out_d;
+   
+   
+  
+endmodule // prg_10b_4in_max
+
+
+module prg_6b_3in_max (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                   
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c;
+   
+   
+   
+
+
+
+prg_6b_trip     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a | sn_out_b | sn_out_c;
+   
+   
+  
+endmodule // prg_6b_3in_max
+
+module prg_8b_3in_max (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                   
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c;
+   
+   
+   
+
+
+
+prg_8b_trip     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a | sn_out_b | sn_out_c;
+   
+   
+  
+endmodule // prg_8b_3in_max
+
+module prg_10b_3in_max (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                   
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c;
+   
+   
+   
+
+
+
+prg_10b_trip     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a | sn_out_b | sn_out_c;
+   
+   
+  
+endmodule // prg_10b_3in_max
+
+
+module prg_6b_max (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in_a,bin_in_b;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b;
+   
+   
+   
+
+
+
+prg_6b_dual     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a | sn_out_b;
+   
+   
+  
+endmodule // prg_6b_max
+
+module prg_8b_max (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in_a,bin_in_b;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b;
+   
+   
+   
+
+
+
+prg_8b_dual     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a | sn_out_b;
+   
+   
+  
+endmodule // prg_8b_max
+
+module prg_10b_max (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in_a,bin_in_b;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b;
+   
+   
+   
+
+
+
+prg_10b_dual     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a | sn_out_b;
+   
+   
+  
+endmodule // prg_10b_max
 
 
 module prg_4b_min (
@@ -376,7 +1414,915 @@ dsc_min       min_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
 
 endmodule // prg_4b_min
 
+module prg_4b_3in_min (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                   
+    sn_out,
+    ctr_overflow  
+);
 
+   input       clk,rst,en;
+   input [3:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c;
+   
+   
+   
+
+
+
+prg_4b_trip     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a & sn_out_b & sn_out_c;
+   
+   
+  
+endmodule // prg_4b_3in_min
+
+
+module prg_4b_4in_min (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [3:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_4b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a & sn_out_b & sn_out_c & sn_out_d;
+   
+   
+  
+endmodule // prg_4b_4in_min
+
+module prg_6b_4in_min (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_6b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a & sn_out_b & sn_out_c & sn_out_d;
+   
+   
+  
+endmodule // prg_6b_4in_min
+
+module prg_8b_4in_min (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_8b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a & sn_out_b & sn_out_c & sn_out_d;
+   
+   
+  
+endmodule // prg_8b_4in_min
+
+module prg_10b_4in_min (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_10b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a & sn_out_b & sn_out_c & sn_out_d;
+   
+   
+  
+endmodule // prg_10b_4in_min
+
+
+module prg_6b_3in_min (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                   
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c;
+   
+   
+   
+
+
+
+prg_6b_trip     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a & sn_out_b & sn_out_c;
+   
+   
+  
+endmodule // prg_6b_3in_min
+
+module prg_8b_3in_min (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                   
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c;
+   
+   
+   
+
+
+
+prg_8b_trip     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a & sn_out_b & sn_out_c;
+   
+   
+  
+endmodule // prg_8b_3in_min
+
+module prg_10b_3in_min (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                   
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c;
+   
+   
+   
+
+
+
+prg_10b_trip     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a & sn_out_b & sn_out_c;
+   
+   
+  
+endmodule // prg_10b_3in_min
+
+
+module prg_4b_3in_mid (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                   
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [3:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c;
+   
+   
+   
+
+
+
+prg_4b_trip     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = (sn_out_a | sn_out_b) & ((sn_out_a & sn_out_b) | sn_out_c);
+   
+   
+   
+  
+endmodule // prg_4b_3in_mid
+
+module prg_6b_3in_mid (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                   
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c;
+   
+   
+   
+
+
+
+prg_6b_trip     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = (sn_out_a | sn_out_b) & ((sn_out_a & sn_out_b) | sn_out_c);
+   
+   
+   
+  
+endmodule // prg_6b_3in_mid
+
+module prg_8b_3in_mid (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                   
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c;
+   
+   
+   
+
+
+
+prg_8b_trip     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = (sn_out_a | sn_out_b) & ((sn_out_a & sn_out_b) | sn_out_c);
+   
+   
+   
+  
+endmodule // prg_8b_3in_mid
+
+module prg_10b_3in_mid (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,                   
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in_a,bin_in_b,bin_in_c;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c;
+   
+   
+   
+
+
+
+prg_10b_trip     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = (sn_out_a | sn_out_b) & ((sn_out_a & sn_out_b) | sn_out_c);
+   
+   
+   
+  
+endmodule // prg_10b_3in_mid
+
+module prg_4b_4in_lowmid (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [3:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_4b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = ((sn_out_a | sn_out_b) & (sn_out_c | sn_out_d))  |  ((sn_out_a & sn_out_b) | (sn_out_c & sn_out_d));
+   
+   
+  
+endmodule // prg_4b_4in_lowmid
+
+module prg_6b_4in_lowmid (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_6b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = ((sn_out_a | sn_out_b) & (sn_out_c | sn_out_d))  |  ((sn_out_a & sn_out_b) | (sn_out_c & sn_out_d));
+   
+   
+  
+endmodule // prg_6b_4in_lowmid
+
+module prg_8b_4in_lowmid (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_8b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = ((sn_out_a | sn_out_b) & (sn_out_c | sn_out_d))  |  ((sn_out_a & sn_out_b) | (sn_out_c & sn_out_d));
+   
+   
+  
+endmodule // prg_8b_4in_lowmid
+
+module prg_10b_4in_lowmid (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_10b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = ((sn_out_a | sn_out_b) & (sn_out_c | sn_out_d))  |  ((sn_out_a & sn_out_b) | (sn_out_c & sn_out_d));
+   
+   
+  
+endmodule // prg_10b_4in_lowmid
+
+
+module prg_4b_4in_highmid (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [3:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_4b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = ((sn_out_a | sn_out_b) & (sn_out_c | sn_out_d))  &  ((sn_out_a & sn_out_b) | (sn_out_c & sn_out_d));
+   
+   
+  
+endmodule // prg_4b_4in_highmid
+
+module prg_6b_4in_highmid (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_6b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = ((sn_out_a | sn_out_b) & (sn_out_c | sn_out_d))  &  ((sn_out_a & sn_out_b) | (sn_out_c & sn_out_d));
+   
+   
+  
+endmodule // prg_6b_4in_highmid
+
+module prg_8b_4in_highmid (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_8b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = ((sn_out_a | sn_out_b) & (sn_out_c | sn_out_d))  &  ((sn_out_a & sn_out_b) | (sn_out_c & sn_out_d));
+   
+   
+  
+endmodule // prg_8b_4in_highmid
+
+module prg_10b_4in_highmid (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    bin_in_c,
+    bin_in_d,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in_a,bin_in_b,bin_in_c,bin_in_d;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b,sn_out_c,sn_out_d;
+   
+   
+   
+
+
+
+prg_10b_quad     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .bin_in_c(bin_in_c),
+                        .bin_in_d(bin_in_d),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .sn_out_c(sn_out_c),
+                        .sn_out_d(sn_out_d),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_max       max_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = ((sn_out_a | sn_out_b) & (sn_out_c | sn_out_d))  &  ((sn_out_a & sn_out_b) | (sn_out_c & sn_out_d));
+   
+   
+  
+endmodule // prg_10b_4in_highmid
+
+
+module prg_6b_min (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [5:0] bin_in_a,bin_in_b;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b;
+   
+   
+   
+
+
+
+prg_6b_dual     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_min       min_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a & sn_out_b;
+  
+   
+
+endmodule // prg_6b_min
+
+module prg_8b_min (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [7:0] bin_in_a,bin_in_b;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b;
+   
+   
+   
+
+
+
+prg_8b_dual     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_min       min_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a & sn_out_b;
+  
+   
+
+endmodule // prg_8b_min
+
+module prg_10b_min (
+	clk,
+    rst,
+    en,
+    bin_in_a,
+    bin_in_b,
+    sn_out,
+    ctr_overflow  
+);
+
+   input       clk,rst,en;
+   input [9:0] bin_in_a,bin_in_b;
+   output      sn_out,ctr_overflow;
+
+   wire        sn_out_a,sn_out_b;
+   
+   
+   
+
+
+
+prg_10b_dual     prg_ab (.clk(clk),.rst(rst),.en(en), 
+                        .bin_in_a(bin_in_a),
+                        .bin_in_b(bin_in_b),
+                        .sn_out_a(sn_out_a),
+                        .sn_out_b(sn_out_b),
+                        .ctr_overflow(ctr_overflow));
+   
+//dsc_min       min_gate (.a(sn_out_a), .b(sn_out_b), .y(sn_out));
+   assign sn_out = sn_out_a & sn_out_b;
+  
+   
+
+endmodule // prg_10b_min
 
 
 module prg_4b_by2 (

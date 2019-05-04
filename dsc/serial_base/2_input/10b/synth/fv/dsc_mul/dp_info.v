@@ -1,0 +1,62 @@
+module increment_unsigned_2_GENERIC_REAL(A, CI, Z);
+// synthesis_equation increment_unsigned
+  input [19:0] A;
+  input CI;
+  output [19:0] Z;
+  wire [19:0] A;
+  wire CI;
+  wire [19:0] Z;
+  wire n_42, n_43, n_44, n_45, n_46, n_47, n_48, n_49;
+  wire n_50, n_51, n_52, n_53, n_54, n_55, n_56, n_57;
+  wire n_58, n_59, n_60;
+  xor g1 (Z[0], A[0], CI);
+  and g2 (n_42, A[0], CI);
+  xor g20 (Z[1], A[1], n_42);
+  and g21 (n_43, A[1], n_42);
+  xor g22 (Z[2], A[2], n_43);
+  and g23 (n_44, A[2], n_43);
+  xor g24 (Z[3], A[3], n_44);
+  and g25 (n_45, A[3], n_44);
+  xor g26 (Z[4], A[4], n_45);
+  and g27 (n_46, A[4], n_45);
+  xor g28 (Z[5], A[5], n_46);
+  and g29 (n_47, A[5], n_46);
+  xor g30 (Z[6], A[6], n_47);
+  and g31 (n_48, A[6], n_47);
+  xor g32 (Z[7], A[7], n_48);
+  and g33 (n_49, A[7], n_48);
+  xor g34 (Z[8], A[8], n_49);
+  and g35 (n_50, A[8], n_49);
+  xor g36 (Z[9], A[9], n_50);
+  and g37 (n_51, A[9], n_50);
+  xor g38 (Z[10], A[10], n_51);
+  and g39 (n_52, A[10], n_51);
+  xor g40 (Z[11], A[11], n_52);
+  and g41 (n_53, A[11], n_52);
+  xor g42 (Z[12], A[12], n_53);
+  and g43 (n_54, A[12], n_53);
+  xor g44 (Z[13], A[13], n_54);
+  and g45 (n_55, A[13], n_54);
+  xor g46 (Z[14], A[14], n_55);
+  and g47 (n_56, A[14], n_55);
+  xor g48 (Z[15], A[15], n_56);
+  and g49 (n_57, A[15], n_56);
+  xor g50 (Z[16], A[16], n_57);
+  and g51 (n_58, A[16], n_57);
+  xor g52 (Z[17], A[17], n_58);
+  and g53 (n_59, A[17], n_58);
+  xor g54 (Z[18], A[18], n_59);
+  and g55 (n_60, A[18], n_59);
+  xor g56 (Z[19], A[19], n_60);
+endmodule
+
+module increment_unsigned_2_GENERIC(A, CI, Z);
+  input [19:0] A;
+  input CI;
+  output [19:0] Z;
+  wire [19:0] A;
+  wire CI;
+  wire [19:0] Z;
+  increment_unsigned_2_GENERIC_REAL g1(.A (A), .CI (CI), .Z (Z));
+endmodule
+
