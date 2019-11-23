@@ -1,0 +1,3 @@
+dsc_serial_mul_tb.sv
+dsc_serial_mul.v
+../common/modules.v
