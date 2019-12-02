@@ -5,13 +5,13 @@ DIR_TMP  := /tmp/$(USERNAME)verilog
 #----- Targets, ncverilog
 # Use this to compile without running simulation
 compile:
-	vcs -full64 -sverilog -debug_access+pp -o ${NAME_TOP} -f top
+	vcs -full64 -sverilog -debug_access+pp -o ${NAME_TOP} -f top | tee compile.log
 
 
 # Run simulation
 run:
 ifdef NUM_TESTS
-	./${NAME_TOP} +NUM_TESTS=$(NUM_TESTS) | tee sim.log
+	./${NAME_TOP} +NUM_TESTS=$(NUM_TESTS)  |tee sim.log
 else
 	./${NAME_TOP} +NUM_TESTS=10 | tee sim.log
 endif
@@ -22,6 +22,14 @@ ifdef NUM_TESTS
 	./${NAME_TOP} +NUM_TESTS=$(NUM_TESTS) +DEBUG | tee sim.log
 else
 	./${NAME_TOP} +NUM_TESTS=10 +DEBUG | tee sim.log
+endif
+
+# Run simulation
+run_ov:
+ifdef NUM_TESTS
+		./${NAME_TOP} +NUM_TESTS=$(NUM_TESTS) +CYCLES_OVERRIDE=$(CYCLES_OVERRIDE)  |tee sim_ov${CYCLES_OVERRIDE}.log		
+else
+	./${NAME_TOP} +NUM_TESTS=10 +CYCLES_OVERRIDE=$(CYCLES_OVERRIDE) | tee sim_ov${CYCLES_OVERRIDE}.log
 endif
 
 
@@ -49,7 +57,6 @@ clean:
 	@rm -rf simv
 	@rm -rf ${NAME_TOP}_tb.vpd
 	@rm -rf ${NAME_TOP}_tb.vcd
-	@rm -rf sim.log
 
 
 

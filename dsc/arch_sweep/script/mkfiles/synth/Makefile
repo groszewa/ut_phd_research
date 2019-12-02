@@ -9,11 +9,10 @@ synth:
 #----- Cleanup
 # Delete temporary files
 clean:
-	@rm -rf *.rpt*
 	@rm -rf fv
-	@rm -rf *.log*
+	@rm -rf *.log[0-9]
 	@rm -rf libscore_work
-	@rm -rf *.cmd*
+	@rm -rf *.cmd[0-9]
 	@rm -rf $(NAME_TOP)_netlist.v
 
 

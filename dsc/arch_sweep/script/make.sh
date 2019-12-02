@@ -34,9 +34,10 @@ build() {
     misc=modules.v
 
     #create top file 
-    echo $(realpath testbench/${tb_top})   > build/${arch}/${testcase}/top
+    echo $(realpath testbench/tb_top.sv)   > build/${arch}/${testcase}/top
+    echo $(realpath testbench/${tb_top})  >> build/${arch}/${testcase}/top
     echo $(realpath rtl/${rtl_top})       >> build/${arch}/${testcase}/top
-    echo $(realpath rtl/modules.v)          >> build/${arch}/${testcase}/top
+    echo $(realpath rtl/modules.v)        >> build/${arch}/${testcase}/top
 
     #if exists, remove sdc file
     rm -rf build/${arch}/${testcase}/synth/${arch}.sdc
