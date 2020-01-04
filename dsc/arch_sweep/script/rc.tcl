@@ -13,7 +13,7 @@ read_hdl -sv ${myfiles}
 
 set num_inputs [list "NUM_INPUTS" hello]
 set data_width [list "DATA_WIDTH" world]
-elaborate -parameters [list $data_width $num_inputs] ${design}
+elaborate -parameters [list $data_width $num_inputs ] ${design}
 
 check_design -unresolved
 

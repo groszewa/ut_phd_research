@@ -2,6 +2,7 @@
 
 wtxt="parameter DATA_WIDTH = "
 itxt="parameter NUM_INPUTS = "
+mtxt="parameter WXIP1 = "
 
 log () {
     echo $(date): $1 | tee -a build/build.log
@@ -11,6 +12,7 @@ build() {
     arch=$1
     data_width=$2
     num_inputs=$3
+    mulp1=$(($data_width*$num_inputs+1))
     testcase=i${num_inputs}d${data_width}
     echo "$0 : build() : building build/${arch}/${testcase}"
 
@@ -27,7 +29,8 @@ build() {
     chmod 755 build/${arch}/${testcase}/params.vh
     #modify parameters in header file
     sed -i -e "s/${wtxt}[0-9]*;/${wtxt}${data_width};/" \
-           -e "s/${itxt}[0-9]*;/${itxt}${num_inputs};/" build/${arch}/${testcase}/params.vh
+           -e "s/${itxt}[0-9]*;/${itxt}${num_inputs};/" \
+           -e "s/${mtxt}[0-9]*;/${mtxt}${mulp1};/" build/${arch}/${testcase}/params.vh
     
     rtl_top=${arch}.v
     tb_top=${arch}_tb.sv

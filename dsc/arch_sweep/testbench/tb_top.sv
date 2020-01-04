@@ -23,14 +23,14 @@ module tb_top;
       
    wire           op_finished;
 
-   shortint       expected_result;
-   shortint       outval_int;
-   shortint       sub;
+   longint       expected_result;
+   longint       outval_int;
+   longint       sub;
       
    
 
-   wire [99:0]    cycle_count;
-   wire           cycle_count_overflow;
+   wire [WXIP1-1:0]    cycle_count;
+   wire                cycle_count_overflow;
    
    integer         test;
    real            cycle_count_acc;
@@ -38,7 +38,7 @@ module tb_top;
    
             
 
-core #(.DATA_WIDTH(DATA_WIDTH), .NUM_INPUTS(NUM_INPUTS)) dut (.*);
+core #(.DATA_WIDTH(DATA_WIDTH), .NUM_INPUTS(NUM_INPUTS)) core_inst (.*);
    
 
    
@@ -46,7 +46,7 @@ core #(.DATA_WIDTH(DATA_WIDTH), .NUM_INPUTS(NUM_INPUTS)) dut (.*);
 //count number of clock cycles here
 //TODO//                   
 
-counter #(.WIDTH(100), .STRIDE(1)) cycle_counter (
+counter #(.WIDTH(WXIP1), .STRIDE(1)) cycle_counter (
   .clk(gclk),
   .rst(rst),
   .en(en),
@@ -65,6 +65,7 @@ always
 //----------------------------------------------------------- // initial blocks are sequential and start at time 0
   initial
     begin
+       
 
        r = $value$plusargs("NUM_TESTS=%d", NUM_TESTS);
        $display("num_tests = %d", NUM_TESTS);
@@ -77,6 +78,11 @@ always
        end
 
        debug_on = $test$plusargs("DEBUG");
+
+       if($test$plusargs("INJECT_FAIL")) begin
+          $fatal("ERROR : Fail induced with +INJECT_FAIL, exiting.");
+       end
+          
        
           
        
@@ -118,7 +124,6 @@ always
             #10 rst = 0;
             #10 en = 1;
 
-            //expected_result = input_bin_a * input_bin_b * input_bin_c * input_bin_d;
             expected_result = 1;
             for(int i=0;i<NUM_INPUTS;i++) begin : result_loop
                expected_result *= bin_data_in[i];
@@ -147,8 +152,8 @@ always
 
             if(expected_result != bin_data_out) begin
                if(calc_mae) begin
-                  outval_int = shortint'(bin_data_out);
-                  $display("MISMATCH : Test %4d : cycles_count=%10d, output=%6d, expected=%6d, AE=%f", test, cycle_count, bin_data_out, expected_result, absolute(shortint'(bin_data_out)-expected_result)/expected_result);
+                  outval_int = longint'(bin_data_out);
+                  $display("MISMATCH : Test %4d : cycles_count=%10d, output=%6d, expected=%6d, AE=%f", test, cycle_count, bin_data_out, expected_result, absolute(longint'(bin_data_out)-expected_result)/expected_result);
                   absolute_error_acc += absolute(bin_data_out-expected_result)/expected_result;
                end else begin  
                   $fatal("ERROR : RTL(%6d) != EXPECTED(%6d)",bin_data_out,expected_result);
@@ -158,13 +163,15 @@ always
             en  = 0;
          end
 
-
+    //hello
        
-    $display("Average cycle time  : %f",cycle_count_acc/NUM_TESTS);
-    $display("Mean Absolute Error : %f",absolute_error_acc/NUM_TESTS);
+    $display("average_cycle_time  : %f",cycle_count_acc/NUM_TESTS);
+    $display("MAE : %f",absolute_error_acc/NUM_TESTS);
     $display(" << Simulation Complete >> ");
        
     $finish; //stop similation and give control back to OS
+    //$stop;
+       
   end // initial begin
 
 
@@ -187,7 +194,7 @@ always
    
 endmodule //of cnt16_tb
 
-function real absolute(input shortint a);
+function real absolute(input longint a);
    if(a >= 0) return (a);
    else return (-a);
 endfunction // absolute

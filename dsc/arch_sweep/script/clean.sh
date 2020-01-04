@@ -17,8 +17,8 @@ fi
 #echo "$0 : Building RTL and Synth collateral for ${arch}"
 my_root=$(pwd)
 
-for w in {2..10}; do
-    for i in {2..5}; do
+for i in {2..5}; do
+    for w in {2..10}; do
         echo "Cleaning up build/${arch}/${testcase}"
         testcase=i${i}d${w}
         cd build/${arch}/${testcase}

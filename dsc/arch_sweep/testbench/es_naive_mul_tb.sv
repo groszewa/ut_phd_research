@@ -19,7 +19,7 @@ module core #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2)(
    output                               op_finished;
 
 
-es_naive_mul #(.DATA_WIDTH(DATA_WIDTH), .NUM_INPUTS(NUM_INPUTS)) es_naive_mul (
+es_naive_mul #(.DATA_WIDTH(DATA_WIDTH), .NUM_INPUTS(NUM_INPUTS)) dut (
   .clk(gclk),
   .rst(rst),
   .en(en),

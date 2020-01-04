@@ -51,12 +51,10 @@ clean:
 	@rm -rf DVEfiles
 	@rm -rf ucli.key
 	@rm -rf opendatabase.log
-	@rm -f  $(NAME_TOP)_tb.dump
-	@rm -f  $(NAME_TOP)_tb.dump.vpd
 	@rm -rf $(NAME_TOP).daidir
 	@rm -rf simv
-	@rm -rf ${NAME_TOP}_tb.vpd
-	@rm -rf ${NAME_TOP}_tb.vcd
+	@rm -rf tb_top.vpd
+	@rm -rf tb_top.vcd
 
 
 
