@@ -150,7 +150,7 @@ always
             
             
 
-            if(expected_result != bin_data_out) begin
+            if(expected_result !== bin_data_out) begin
                if(calc_mae) begin
                   outval_int = longint'(bin_data_out);
                   $display("MISMATCH : Test %4d : cycles_count=%10d, output=%6d, expected=%6d, AE=%f", test, cycle_count, bin_data_out, expected_result, absolute(longint'(bin_data_out)-expected_result)/expected_result);

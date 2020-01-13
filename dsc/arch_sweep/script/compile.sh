@@ -35,7 +35,7 @@ simulate() {
 arch=$1
 num_tests=$2
 
-if [ "$arch" == "dsc_serial_mul" ] || [ "$arch" == "es_naive_mul" ]; then
+if [ "$arch" == "dsc_serial_mul" ] || [ "$arch" == "es_naive_mul" ] || [ "$arch" == "ms_serial_by2_mul" ]; then
     echo "$0 : Building RTL and Synth collateral for ${arch}"
 else
     echo "${arch} not supported! Exiting."
