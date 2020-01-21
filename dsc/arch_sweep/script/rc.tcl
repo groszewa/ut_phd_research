@@ -35,7 +35,7 @@ synthesize -to_mapped
 #synthesize -to_mapped -effort high -incr
 
 write_hdl -mapped >  ${design}_netlist.v
-report timing -num_paths 3 > timing.rpt
+report timing -num_paths 1 > timing.rpt
 report power >  power.rpt
 report gates >  gates.rpt
 report area  >  area.rpt
