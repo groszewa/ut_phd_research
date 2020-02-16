@@ -1,5 +1,5 @@
-set_attribute hdl_search_path {./} 
-set_attribute lib_search_path {./}
+set_attribute hdl_search_path {./ ../../../../rtl ../../../../rtl/include} 
+set_attribute lib_search_path {../../../../script}
 
 set_attribute lp_power_analysis_effort high
 

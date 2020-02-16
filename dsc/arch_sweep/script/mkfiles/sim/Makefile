@@ -5,7 +5,7 @@ DIR_TMP  := /tmp/$(USERNAME)verilog
 #----- Targets, ncverilog
 # Use this to compile without running simulation
 compile:
-	vcs -full64 -sverilog -debug_access+pp -o ${NAME_TOP} -f top | tee compile.log
+	vcs -full64 -sverilog -debug_access+pp -o ${NAME_TOP} -f top +incdir+../../../rtl/include| tee compile.log
 
 
 # Run simulation

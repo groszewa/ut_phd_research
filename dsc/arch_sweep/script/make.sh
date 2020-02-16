@@ -49,8 +49,8 @@ build() {
     cp script/arch.sdc build/${arch}/${testcase}/synth/${arch}.sdc
 
     ln -sf $(realpath rtl/${arch}.v) build/${arch}/${testcase}/synth/.
-    ln -sf $(realpath rtl/modules.v) build/${arch}/${testcase}/synth/.
-    ln -sf $(realpath script/gscl45nm.lib) build/${arch}/${testcase}/synth/.
+    #ln -sf $(realpath rtl/modules.v) build/${arch}/${testcase}/synth/.
+    #ln -sf $(realpath script/gscl45nm.lib) build/${arch}/${testcase}/synth/.
 
 
 
