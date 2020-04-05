@@ -5,7 +5,7 @@ DIR_TMP  := /tmp/$(USERNAME)verilog
 #----- Targets, ncverilog
 # Use this to compile without running simulation
 compile:
-	vcs -full64 -sverilog -debug_access+pp -o ${NAME_TOP} -f top +incdir+../../../rtl/include| tee compile.log
+	vcs -full64 -sverilog -debug_access+pp -o ${NAME_TOP} -f top +incdir+${MODEL_ROOT}/rtl/include| tee compile.log
 
 
 # Run simulation
@@ -24,12 +24,20 @@ else
 	./${NAME_TOP} +NUM_TESTS=10 +DEBUG | tee sim.log
 endif
 
-# Run simulation
+# Run simulation with cycle override
 run_ov:
 ifdef NUM_TESTS
 		./${NAME_TOP} +NUM_TESTS=$(NUM_TESTS) +CYCLES_OVERRIDE=$(CYCLES_OVERRIDE)  |tee sim_ov${CYCLES_OVERRIDE}.log		
 else
 	./${NAME_TOP} +NUM_TESTS=10 +CYCLES_OVERRIDE=$(CYCLES_OVERRIDE) | tee sim_ov${CYCLES_OVERRIDE}.log
+endif
+
+# Run simulation with cycle override and debug switch
+run_ov_debug:
+ifdef NUM_TESTS
+		./${NAME_TOP} +DEBUG +NUM_TESTS=$(NUM_TESTS) +CYCLES_OVERRIDE=$(CYCLES_OVERRIDE)  |tee sim_ov${CYCLES_OVERRIDE}.log		
+else
+	./${NAME_TOP} +DEBUG +NUM_TESTS=10 +CYCLES_OVERRIDE=$(CYCLES_OVERRIDE) | tee sim_ov${CYCLES_OVERRIDE}.log
 endif
 
 

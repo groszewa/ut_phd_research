@@ -26,6 +26,10 @@ module tb_top;
    longint       expected_result;
    longint       outval_int;
    longint       sub;
+
+   real          expected_result_frac;
+   real          frac_data_out;
+   
       
    
 
@@ -144,19 +148,39 @@ always
             	end
             	$display("output=%d, cycle_count=%10d",bin_data_out,cycle_count);
             end
+
+            //expected_result_frac = 1.0;
+            //for(int i=0;i<NUM_INPUTS;i++) begin : result_loop_frac
+            //   expected_result_frac *= $itor(bin_data_in[i])/$itor(cycle_count);
+            //end
+
             
-            
-            
-            
+            expected_result_frac = $itor(expected_result)/$itor(cycle_count);
+            frac_data_out = $itor(bin_data_out)/$itor(cycle_count);
+            //$display("expected_int = %6d, actual_int = %6d", expected_result, bin_data_out);            
+            //$display("expected = %f, actual = %f", expected_result_frac, frac_data_out);
             
 
-            if(expected_result !== bin_data_out) begin
+            if(expected_result_frac !== frac_data_out) begin
                if(calc_mae) begin
-                  outval_int = longint'(bin_data_out);
-                  $display("MISMATCH : Test %4d : cycles_count=%10d, output=%6d, expected=%6d, AE=%f", test, cycle_count, bin_data_out, expected_result, absolute(longint'(bin_data_out)-expected_result)/expected_result);
-                  absolute_error_acc += absolute(bin_data_out-expected_result)/expected_result;
+                  //outval_int = longint'(bin_data_out);
+                  //display("MISMATCH : Test %4d : cycles_count=%10d, output=%6d, expected=%6d, AE=%f", test, cycle_count, bin_data_out, expected_result, absolute(longint'(bin_data_out)-expected_result)/expected_result);
+                  real ae;
+                  
+                  if(expected_result_frac > 1) begin
+                     ae = 1.0;
+                     $display("WARNING: Expected output of %10d cannot be represented in %10d cycles, assigning max absolute error!",expected_result,cycle_count);
+                  end else begin
+                    ae = absolute(frac_data_out-expected_result_frac)/expected_result_frac;
+                  end
+               
+                 
+                  
+                  $display("MISMATCH : Test %4d : cycles_count=%10d, output=%f (%6d/%10d), expected=%f (%6d/%10d), AE=%f", test, cycle_count, frac_data_out , bin_data_out, cycle_count, expected_result_frac,expected_result,cycle_count, ae);
+        
+                  absolute_error_acc += ae;
                end else begin  
-                  $fatal("ERROR : RTL(%6d) != EXPECTED(%6d)",bin_data_out,expected_result);
+                  $fatal("ERROR : RTL(%6d) != EXPECTED(%6d)",frac_data_out,expected_result_frac);
                end
             end
             rst = 1;
@@ -194,8 +218,14 @@ always
    
 endmodule //of cnt16_tb
 
-function real absolute(input longint a);
+//function real absolute(input longint a);
+//   if(a >= 0) return (a);
+//   else return (-a);
+//endfunction // absolute
+
+function real absolute(input real a);
    if(a >= 0) return (a);
    else return (-a);
 endfunction // absolute
+
 

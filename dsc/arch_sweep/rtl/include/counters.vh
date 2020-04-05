@@ -1,15 +1,5 @@
-`define CLOG2(x)  \
-	(x<=1)    ? 0   : \
-	(x<=2)    ? 1   : \
-	(x<=4)    ? 2   : \
-	(x<=8)    ? 3   : \
-	(x<=16)   ? 4   : \
-	(x<=32)   ? 5   : \
-	(x<=64)   ? 6   : \
-	(x<=128)  ? 7   : \
-	(x<=256)  ? 8   : \
-	(x<=512)  ? 9   : \
-	(x<=1024) ? 10  : -1
+`ifndef __COUNTERS__
+`define __COUNTERS__
 
 //basic counter parametrized
 module counter #(parameter WIDTH=4, parameter STRIDE=1) (
@@ -63,3 +53,5 @@ module counter_input #(parameter WIDTH=4) (
 		end // else if (en)
 	end //always
 endmodule // counter_input
+
+`endif
