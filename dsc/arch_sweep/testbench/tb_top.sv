@@ -30,9 +30,8 @@ module tb_top;
    real          expected_result_frac;
    real          frac_data_out;
    
-      
+   longint          denom;         
    
-
    wire [WXIP1-1:0]    cycle_count;
    wire                cycle_count_overflow;
    
@@ -154,9 +153,15 @@ always
             //   expected_result_frac *= $itor(bin_data_in[i])/$itor(cycle_count);
             //end
 
-            
-            expected_result_frac = $itor(expected_result)/$itor(cycle_count);
-            frac_data_out = $itor(bin_data_out)/$itor(cycle_count);
+
+            if(cycle_count <= MIN_CYC_DSC) begin
+               denom = MIN_CYC_DSC;
+            end
+            else begin
+               denom = cycle_count;
+            end
+            expected_result_frac = $itor(expected_result)/$itor(denom);
+            frac_data_out = $itor(bin_data_out)/$itor(denom);
             //$display("expected_int = %6d, actual_int = %6d", expected_result, bin_data_out);            
             //$display("expected = %f, actual = %f", expected_result_frac, frac_data_out);
             
@@ -169,25 +174,24 @@ always
                   
                   if(expected_result_frac > 1) begin
                      ae = 1.0;
-                     $display("WARNING: Expected output of %10d cannot be represented in %10d cycles, assigning max absolute error!",expected_result,cycle_count);
+                     $display("WARNING: Expected output of %10d cannot be represented in %10d cycles, assigning max absolute error!",expected_result,denom);
                   end else begin
                     ae = absolute(frac_data_out-expected_result_frac)/expected_result_frac;
                   end
                
                  
                   
-                  $display("MISMATCH : Test %4d : cycles_count=%10d, output=%f (%6d/%10d), expected=%f (%6d/%10d), AE=%f", test, cycle_count, frac_data_out , bin_data_out, cycle_count, expected_result_frac,expected_result,cycle_count, ae);
+                  $display("MISMATCH : Test %4d : cycles_count=%10d, output=%f (%6d/%10d), expected=%f (%6d/%10d), AE=%f", test, cycle_count, frac_data_out , bin_data_out, denom, expected_result_frac,expected_result,denom, ae);
         
                   absolute_error_acc += ae;
-               end else begin  
+               end else begin // if (calc_mae) 
                   $fatal("ERROR : RTL(%6d) != EXPECTED(%6d)",frac_data_out,expected_result_frac);
-               end
-            end
+               end // if (!calc_mae)
+            end // if (expected_result_frac !== frac_data_out)
             rst = 1;
             en  = 0;
          end
 
-    //hello
        
     $display("average_cycle_time  : %f",cycle_count_acc/NUM_TESTS);
     $display("MAE : %f",absolute_error_acc/NUM_TESTS);
