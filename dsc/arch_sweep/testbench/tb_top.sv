@@ -160,7 +160,9 @@ always
             else begin
                denom = cycle_count;
             end
-            expected_result_frac = $itor(expected_result)/$itor(denom);
+            //expected_result_frac = $itor(expected_result)/$itor(denom);
+            expected_result_frac = $itor(expected_result)/$itor(MIN_CYC_DSC);
+            
             frac_data_out = $itor(bin_data_out)/$itor(denom);
             //$display("expected_int = %6d, actual_int = %6d", expected_result, bin_data_out);            
             //$display("expected = %f, actual = %f", expected_result_frac, frac_data_out);
@@ -181,7 +183,7 @@ always
                
                  
                   
-                  $display("MISMATCH : Test %4d : cycles_count=%10d, output=%f (%6d/%10d), expected=%f (%6d/%10d), AE=%f", test, cycle_count, frac_data_out , bin_data_out, denom, expected_result_frac,expected_result,denom, ae);
+                  $display("MISMATCH : Test %4d : cycles_count=%10d, output=%f (%6d/%10d), expected=%f (%6d/%10d), AE=%f", test, cycle_count, frac_data_out , bin_data_out, denom, expected_result_frac,expected_result,MIN_CYC_DSC, ae);
         
                   absolute_error_acc += ae;
                end else begin // if (calc_mae) 

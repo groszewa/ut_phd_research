@@ -1,5 +1,5 @@
 module lfsr16 #(parameter FLAVOR=0)(
- output reg [15:0] countval,
+ output reg [31:0] countval,
  output reg overflow,                                   
  input             en,
  input             clk,
@@ -17,7 +17,7 @@ initial begin
     lfsr <= 16'haaaa;
   end
   else if (FLAVOR==1) begin
-    lfsr <= 16'hffff;  
+    lfsr <= 16'h9999;  
   end
  assign overflow = 0;  
 end
@@ -31,7 +31,7 @@ always @(posedge clk) begin
        lfsr <= 16'haaaa;
     end
     else if(FLAVOR==1) begin
-       lfsr <= 16'hffff;
+       lfsr <= 16'h9999;
     end
     countval <= lfsr;
     //out <= 1;
@@ -52,6 +52,7 @@ always @(posedge clk) begin
       lfsr[13] <= lfsr[12];
       lfsr[14] <= lfsr[13];
       lfsr[15] <= lfsr[14];
+     
   end // if (en)
 end
 endmodule // lfsr16

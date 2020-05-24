@@ -63,6 +63,7 @@ clean:
 	@rm -rf simv
 	@rm -rf tb_top.vpd
 	@rm -rf tb_top.vcd
+	@rm -rf sim_ov*.log
 
 
 
