@@ -1,4 +1,4 @@
-NAME_TOP := MY_NAME_TOP
+NAME_TOP := sc_serial_mul
 USERNAME := $(shell whoami)
 DIR_TMP  := /tmp/$(USERNAME)verilog
 

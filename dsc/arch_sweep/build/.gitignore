@@ -1,3 +1,4 @@
-*
-*/
-!.gitignore
+/*
+!/.gitignore
+!/sc_serial_mul
+!/sc_serial_mul/*
