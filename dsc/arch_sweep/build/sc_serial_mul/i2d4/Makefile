@@ -64,6 +64,8 @@ clean:
 	@rm -rf tb_top.vpd
 	@rm -rf tb_top.vcd
 	@rm -rf sim_ov*.log
+	@rm -rf compile.log
+	@rm -rf sim.log
 
 
 
