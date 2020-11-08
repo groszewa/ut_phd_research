@@ -43,7 +43,7 @@ endif
 
 # Start viewer
 viewer:
-	dve -full64  -vpd ${NAME_TOP}_tb.vpd -script session_settings.tcl &
+	dve -full64  -vpd tb_top.vpd  &
 
 # ncverilog help, command line
 help:

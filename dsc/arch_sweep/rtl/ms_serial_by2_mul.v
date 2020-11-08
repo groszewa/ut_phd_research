@@ -12,7 +12,7 @@ module ms_serial_by2_mul #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2) (
 	input  [DATA_WIDTH-1:0] bin_data_in [NUM_INPUTS-1:0];
 	input                   clk,rst,en;
 
-	output [(NUM_INPUTS*DATA_WIDTH)-1:0] bin_data_out;
+	output [WXIP1-1:0] bin_data_out;
 	output                               done;
 	
 	wire [NUM_INPUTS-1:0] sng_ov;
@@ -151,7 +151,7 @@ module ms_serial_by2_mul #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2) (
       assign bs_data_out[30] = bs_data_in[0][1] & bs_data_in[1][1] & bs_data_in[2][1] & bs_data_in[3][1] & bs_data_in[4][0];
       assign bs_data_out[31] = bs_data_in[0][1] & bs_data_in[1][1] & bs_data_in[2][1] & bs_data_in[3][1] & bs_data_in[4][1];
    
-      par_acc_32lanes  #(.WIDTH(DATA_WIDTH*NUM_INPUTS)) stoch2bin (
+      par_acc_32lanes  #(.WIDTH(WXIP1)) stoch2bin (
         .clk(clk),
         .rst(rst),                                               
         .data_in(bs_data_out),

@@ -12,7 +12,7 @@ module sc_serial_mul  (
 	input  [3:0] bin_data_in [1:0];
 	input                   clk,rst,en;
 
-	output [7:0] bin_data_out;
+	output [9:0] bin_data_out;
 	output                               done;
 	
 	wire [1:0] bs_data_in,sng_ov;
@@ -43,7 +43,7 @@ module sc_serial_mul  (
 
 	assign bs_data_out = &bs_data_in;
 
-	counter #(.WIDTH(8), .STRIDE(1)) stoch2bin (
+	counter #(.WIDTH(WXIP1), .STRIDE(1)) stoch2bin (
 		.clk(clk),
 		.rst(rst),
 		.en(bs_data_out),

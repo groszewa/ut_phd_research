@@ -15,7 +15,7 @@ module core #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2)(
    input en;
    input [DATA_WIDTH-1:0] bin_data_in [NUM_INPUTS-1:0];
 
-   output [(NUM_INPUTS*DATA_WIDTH)-1:0] bin_data_out;
+   output [WXIP1-1:0] bin_data_out;
    output                               op_finished;
 
 

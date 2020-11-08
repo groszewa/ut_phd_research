@@ -6,9 +6,8 @@ import sys
 import argparse
 
 MODEL_ROOT = os.environ['MODEL_ROOT']
+legal_arch_list = ["dsc_serial_mul","sc_serial_mul","ms_serial_by2_mul"]
 
-#global variables
-arch_name = "dsc_serial_mul";
 
 def parse_commandline(args=sys.argv[1:]):
     parser = argparse.ArgumentParser(description="Parses command");
@@ -16,7 +15,13 @@ def parse_commandline(args=sys.argv[1:]):
     parser.add_argument("-a","--arch",help="Architecture to sweep",required=True);
     options = parser.parse_args(args);
     #check arch is a legal value
+    if(not arch_is_legal(options.arch)):
+        print(options.arch + " is not in legal_arch_list : [" + ', '.join(map(str, legal_arch_list))) + "]"
+        sys.exit()
     return options;
+
+def arch_is_legal(arch_name):
+    return (arch_name in legal_arch_list)
     
 
 def get_mae_single_sim(arch,num_tests,num_cycles):
@@ -36,16 +41,21 @@ def get_mae_list_sim_range(arch,num_tests,cycle_range_upper):
     return mae_list
 
 def print_array_to_file(my_array, file_name):
-    with open(file_name,'wb') as csvfile:
+    file_path = MODEL_ROOT + "/csv/" + file_name
+    with open(file_path,'wb') as csvfile:
         csv_writer = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL);
+        csv_writer.writerow(['cycles','MAE'])
         for cycles in range(len(my_array)):
             my_row = [cycles+1,my_array[cycles]];
             csv_writer.writerow(my_row);
-
+        
 def main():
     arglist = parse_commandline();
-    mae_list = get_mae_list_sim_range("dsc_serial_mul",100,10)
-    print_array_to_file(mae_list,"dsc_serial_mul.csv");
+    arch = arglist.arch
+    cycles = int(arglist.cycles)
+    mae_list = get_mae_list_sim_range(arch,100,cycles)
+    arch_csv = arch + '.csv'
+    print_array_to_file(mae_list,arch_csv);
 
 if __name__ == '__main__':
     main()

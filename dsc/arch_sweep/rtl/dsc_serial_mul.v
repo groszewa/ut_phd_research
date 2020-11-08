@@ -12,7 +12,7 @@ module dsc_serial_mul #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2) (
 	input  [DATA_WIDTH-1:0] bin_data_in [NUM_INPUTS-1:0];
 	input                   clk,rst,en;
 
-	output [(NUM_INPUTS*DATA_WIDTH)-1:0] bin_data_out;
+	output [WXIP1-1:0] bin_data_out;
 	output                               done;
 	
 	wire [NUM_INPUTS-1:0] bs_data_in,sng_ov;
@@ -46,7 +46,7 @@ module dsc_serial_mul #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2) (
 
 	assign bs_data_out = &bs_data_in;
 
-	counter #(.WIDTH(DATA_WIDTH*NUM_INPUTS), .STRIDE(1)) stoch2bin (
+	counter #(.WIDTH(WXIP1), .STRIDE(1)) stoch2bin (
 		.clk(clk),
 		.rst(rst),
 		.en(bs_data_out),

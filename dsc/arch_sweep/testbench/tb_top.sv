@@ -19,7 +19,7 @@ module tb_top;
    
    
    
-   wire [(NUM_INPUTS*DATA_WIDTH)-1:0]      bin_data_out;
+   wire [WXIP1-1:0]      bin_data_out;
       
    wire           op_finished;
 
