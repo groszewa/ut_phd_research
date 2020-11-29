@@ -1,7 +1,7 @@
 `timescale 1 ns / 100 ps
 
 
-module es_ordered_mul #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2) (
+module es_ordered_bs_mul #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2) (
 	clk,
 	rst,
 	en,
@@ -58,5 +58,5 @@ module es_ordered_mul #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2) (
 	assign done = sng_ov[NUM_INPUTS-1] | ~bs_data_in[NUM_INPUTS-1];
 
 
-endmodule //es_ordered_mul
+endmodule //es_ordered_bs_mul
 
