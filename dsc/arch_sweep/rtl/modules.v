@@ -18,6 +18,7 @@
 `include "counters.vh"
 `include "adders.vh"
 `include "parallel_acc.vh"
-`include "sng.vh"       
+`include "sng.vh"      
+`include "cas.vh" 
 
 `endif

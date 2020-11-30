@@ -6,7 +6,13 @@ import sys
 import argparse
 
 MODEL_ROOT = os.environ['MODEL_ROOT']
-legal_arch_list = ["dsc_serial_mul","sc_serial_mul","ms_serial_by2_mul","es_ordered_bs_mul"]
+legal_arch_list = ["dsc_serial_mul",
+                   "sc_serial_mul",
+                   "ms_serial_by2_mul",
+                   "ms_es_ordered_cas_by2_mul",
+                   "ms_serial_by4_mul",
+                   "ms_es_ordered_cas_by4_mul",
+                   "es_ordered_bs_mul"]
 
 
 def parse_commandline(args=sys.argv[1:]):

@@ -75,7 +75,7 @@ build() {
 
 arch=$1
 
-if [ "$arch" == "dsc_serial_mul" ] || [ "$arch" == "es_naive_mul" ] || [ "$arch" == "es_ordered_bs_mul" ] || [ "$arch" == "es_ordered_cas_mul" ] || [ "$arch" == "ms_serial_by2_mul" ] || [ "$arch" == "ms_es_naive_by2_mul" ]; then
+if [ "$arch" == "dsc_serial_mul" ] || [ "$arch" == "es_naive_mul" ] || [ "$arch" == "es_ordered_bs_mul" ] || [ "$arch" == "es_ordered_cas_mul" ] || [ "$arch" == "ms_serial_by2_mul" ] || [ "$arch" == "ms_serial_by4_mul" ] || [ "$arch" == "ms_es_naive_by2_mul" ] || [ "$arch" == "ms_es_naive_by4_mul" ] || [ "$arch" == "ms_es_ordered_cas_by2_mul" ] || [ "$arch" == "ms_es_ordered_cas_by4_mul" ]; then
     echo "$0 : Building RTL and Synth collateral for ${arch}"
 else
     echo "${arch} not supported! Exiting."
