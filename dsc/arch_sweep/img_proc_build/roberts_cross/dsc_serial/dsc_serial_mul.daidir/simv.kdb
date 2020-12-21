@@ -1,0 +1,9 @@
+rc file Version 1.0
+
+[Design]
+COMPILE_PATH=/misc/scratch/ajgrosze/ut_phd_research/dsc/arch_sweep/img_proc_build/roberts_cross/dsc_serial
+SystemC=FALSE
+UUM=FALSE
+KDB=FALSE
+USE_NOVAS_HOME=FALSE
+TOP=tb_top par_acc_4lanes par_acc_8lanes par_acc_16lanes par_acc_32lanes sng_dsc sng_dsc_max sng_dsc_min sng_sc_8bit CAS 

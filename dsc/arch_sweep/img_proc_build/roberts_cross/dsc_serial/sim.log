@@ -1,0 +1,26 @@
+Chronologic VCS simulator copyright 1991-2015
+Contains Synopsys proprietary information.
+Compiler version K-2015.09-SP1_Full64; Runtime version K-2015.09-SP1_Full64;  Dec 20 21:29 2020
+num_tests =          10
+No CYCLES_OVERRIDE detected, will assume full accuracy
+VCD+ Writer K-2015.09-SP1_Full64 Copyright (c) 1991-2015 by Synopsys Inc.
+                   0 << Starting the Simulation >>
+Test    0 : input00= 36, input01=129, input10=  9, input11= 99, wx= 63, wy=120, output=183, cycle_count=256
+Test    1 : input00= 13, input01=141, input10=101, input11= 18, wx=  5, wy= 40, output= 45, cycle_count=256
+Test    2 : input00=  1, input01= 13, input10=118, input11= 61, wx= 60, wy=105, output=165, cycle_count=256
+Test    3 : input00=237, input01=140, input10=249, input11=198, wx= 39, wy=109, output=148, cycle_count=256
+Test    4 : input00=197, input01=170, input10=229, input11=119, wx= 78, wy= 59, output=137, cycle_count=256
+Test    5 : input00= 18, input01=143, input10=242, input11=206, wx=188, wy= 99, output=255, cycle_count=210
+Test    6 : input00=232, input01=197, input10= 92, input11=189, wx= 43, wy=105, output=148, cycle_count=256
+Test    7 : input00= 45, input01=101, input10= 99, input11= 10, wx= 35, wy=  2, output= 37, cycle_count=256
+Test    8 : input00=128, input01= 32, input10=170, input11=157, wx= 29, wy=138, output=167, cycle_count=256
+Test    9 : input00=150, input01= 19, input10= 13, input11= 83, wx= 67, wy=  6, output= 73, cycle_count=256
+average_cycle_time  : 251.400000
+MAE : 0.000000
+ << Simulation Complete >> 
+$finish called from file "/misc/scratch/ajgrosze/ut_phd_research/dsc/arch_sweep/testbench/img_proc/roberts_cross/tb_top.sv", line 186.
+$finish at simulation time               504900
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 50490000 ps
+CPU Time:      0.330 seconds;       Data structure size:   0.0Mb
+Sun Dec 20 21:29:48 2020

@@ -3,10 +3,15 @@
 
 `include "adders.vh"
 
-module parallel_ctr_4in (
-  a,
-  y
-);
+module parallel_ctr_2in (a,y);
+   input  [1:0] a;
+   output [1:0] y;
+   
+   HA ha0 (.a(a[0]), .b(a[1]), .s(y[0]), .cout(y[1]));
+   
+endmodule; // parallel_ctr_2in
+
+module parallel_ctr_4in (a,y);
 
    input  [3:0] a;
    output [2:0] y;
@@ -14,14 +19,53 @@ module parallel_ctr_4in (
    wire         w1,w2,ha0_cout;
 
    FA fa0 (.a(a[1]),.b(a[2]),.cin(a[3]),.s(w1),.cout(w2));
-
    HA ha0 (.a(a[0]),.b(w1),.s(y[0]),.cout(ha0_cout));
-
    HA ha1 (.a(ha0_cout),.b(w2),.s(y[1]),.cout(y[2]));
    
-   
-   
 endmodule // parallel_ctr_4inputs
+
+//FIXME - parametrize this
+module par_acc_sat_2lanes #(parameter WIDTH=4) (
+  clk,
+  rst,
+  data_in,
+  countval,
+  overflow                     
+);
+
+   input clk, rst;
+   input [1:0] data_in;
+   output [WIDTH-1:0] countval;
+   output       overflow;
+   
+
+   wire [1:0]   par_acc_int;
+   wire         ctr_en;
+
+   parallel_ctr_2in par_ctr (
+     .a(data_in),
+     .y(par_acc_int)                   
+   );
+
+   //any of the bits of accumulator being 1 will trigger increment
+   assign ctr_en = |par_acc_int;
+   
+
+   counter_input_sat #(.WIDTH(WIDTH)) ctr (
+     .clk(clk),
+     .rst(rst),
+     .en(ctr_en),
+     .data_in(par_acc_int),  
+     .countval(countval),
+     .overflow(overflow)                     
+     );
+   
+endmodule // par_acc_sat_2lanes
+
+
+
+
+
 
 //FIXME - parametrize this
 module par_acc_4lanes #(parameter WIDTH=4) (

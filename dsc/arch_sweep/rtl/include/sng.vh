@@ -42,6 +42,15 @@ end
    
 endmodule //sng_dsc
 
+module comparator #(parameter WIDTH=4, parameter NUM_INPUTS=1) (bin, reference, result);
+   input [WIDTH-1:0] bin, reference;
+   output            result;
+
+   assign result = (bin > reference);
+
+endmodule // comparator
+
+
 //SNG used for DSC (counter instead of LFSR)
 module sng_dsc_multi #(parameter WIDTH=4, parameter NUM_INPUTS=1) (
 	clk,

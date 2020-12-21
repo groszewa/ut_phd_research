@@ -1,0 +1,231 @@
+{
+    "Modules": {
+        "par_acc_32lanes": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "...MASTER...": {},
+        "par_acc_8lanes": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "_vcs_unit__136250082": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "std": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "tb_top": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "par_acc_4lanes": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "par_acc_16lanes": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "parallel_ctr_4in": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "CAS": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "sng_dsc": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "sng_dsc_max": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "sng_dsc_min": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        },
+        "sng_sc_8bit": {
+            "Compiled": "Yes",
+            "Compiled Times": 1
+        }
+    },
+    "ObjArchives": [
+        {
+            "archive": "archive.0/_38053_archive_1.a",
+            "objects": [
+                [
+                    "IUiuv_d.o",
+                    12997
+                ],
+                [
+                    "reYIK_d.o",
+                    29320
+                ],
+                [
+                    "jdPWL_d.o",
+                    54203
+                ],
+                [
+                    "NE8f5_d.o",
+                    10865
+                ],
+                [
+                    "DD9Y2_d.o",
+                    16476
+                ],
+                [
+                    "evxPe_d.o",
+                    10993
+                ],
+                [
+                    "i0KRi_d.o",
+                    14158
+                ],
+                [
+                    "aLVTN_d.o",
+                    16010
+                ],
+                [
+                    "ca8vY_d.o",
+                    10556
+                ],
+                [
+                    "mRKDb_d.o",
+                    11696
+                ],
+                [
+                    "hRzeG_d.o",
+                    11696
+                ],
+                [
+                    "sUqkM_d.o",
+                    12339
+                ],
+                [
+                    "GfP7q_d.o",
+                    10004
+                ]
+            ],
+            "size": 221313
+        }
+    ],
+    "reusePaths": {},
+    "CompUnits": {
+        "amcQw_d": {
+            "mod": "...MASTER...",
+            "out": "objs/amcQw_d.o",
+            "bytes": 11664,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "ca8vY_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "sng_dsc",
+            "out": "ca8vY_d.o",
+            "bytes": 10556,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "aLVTN_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "par_acc_32lanes",
+            "out": "aLVTN_d.o",
+            "bytes": 16010,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "IUiuv_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "_vcs_unit__136250082",
+            "out": "IUiuv_d.o",
+            "bytes": 12997,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "jdPWL_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "tb_top",
+            "out": "jdPWL_d.o",
+            "bytes": 54203,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "i0KRi_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "par_acc_16lanes",
+            "out": "i0KRi_d.o",
+            "bytes": 14158,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "evxPe_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "par_acc_8lanes",
+            "out": "evxPe_d.o",
+            "bytes": 10993,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "sUqkM_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "sng_sc_8bit",
+            "out": "sUqkM_d.o",
+            "bytes": 12339,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "reYIK_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "std",
+            "out": "reYIK_d.o",
+            "bytes": 29320,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "NE8f5_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "parallel_ctr_4in",
+            "out": "NE8f5_d.o",
+            "bytes": 10865,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "hRzeG_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "sng_dsc_min",
+            "out": "hRzeG_d.o",
+            "bytes": 11696,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "mRKDb_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "sng_dsc_max",
+            "out": "mRKDb_d.o",
+            "bytes": 11696,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "DD9Y2_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "par_acc_4lanes",
+            "out": "DD9Y2_d.o",
+            "bytes": 16476,
+            "mode": 4,
+            "checksum": 4294967295
+        },
+        "GfP7q_d": {
+            "archive": "archive.0/_38053_archive_1.a",
+            "mod": "CAS",
+            "out": "GfP7q_d.o",
+            "bytes": 10004,
+            "mode": 4,
+            "checksum": 4294967295
+        }
+    }
+}

@@ -1,0 +1,160 @@
+{
+    "NameTable": {
+        "_vcs_unit__136250082": [
+            "_vcs_unit__136250082",
+            "IUiuv",
+            "module"
+        ],
+        "std": [
+            "std",
+            "reYIK",
+            "module"
+        ],
+        "tb_top": [
+            "tb_top",
+            "jdPWL",
+            "module"
+        ],
+        "par_acc_4lanes": [
+            "par_acc_4lanes",
+            "DD9Y2",
+            "module"
+        ],
+        "par_acc_16lanes": [
+            "par_acc_16lanes",
+            "i0KRi",
+            "module"
+        ],
+        "parallel_ctr_4in": [
+            "parallel_ctr_4in",
+            "NE8f5",
+            "module"
+        ],
+        "...MASTER...": [
+            "SIM",
+            "amcQw",
+            "module"
+        ],
+        "par_acc_8lanes": [
+            "par_acc_8lanes",
+            "evxPe",
+            "module"
+        ],
+        "par_acc_32lanes": [
+            "par_acc_32lanes",
+            "aLVTN",
+            "module"
+        ],
+        "CAS": [
+            "CAS",
+            "GfP7q",
+            "module"
+        ],
+        "sng_dsc": [
+            "sng_dsc",
+            "ca8vY",
+            "module"
+        ],
+        "sng_dsc_max": [
+            "sng_dsc_max",
+            "mRKDb",
+            "module"
+        ],
+        "sng_dsc_min": [
+            "sng_dsc_min",
+            "hRzeG",
+            "module"
+        ],
+        "sng_sc_8bit": [
+            "sng_sc_8bit",
+            "sUqkM",
+            "module"
+        ]
+    },
+    "Misc": {
+        "cwd": "/misc/scratch/ajgrosze/ut_phd_research/dsc/arch_sweep/img_proc_build/roberts_cross/dsc_serial",
+        "daidir": "/misc/scratch/ajgrosze/ut_phd_research/dsc/arch_sweep/img_proc_build/roberts_cross/dsc_serial/dsc_serial_roberts_cross.daidir",
+        "csrc": "csrc",
+        "daidir_abs": "/misc/scratch/ajgrosze/ut_phd_research/dsc/arch_sweep/img_proc_build/roberts_cross/dsc_serial/dsc_serial_roberts_cross.daidir",
+        "csrc_abs": "/misc/scratch/ajgrosze/ut_phd_research/dsc/arch_sweep/img_proc_build/roberts_cross/dsc_serial/csrc",
+        "default_output_dir": "csrc",
+        "archive_dir": "archive.0"
+    },
+    "CompileStrategy": "fullobj",
+    "SIMBData": {
+        "out": "amcQwB.o",
+        "bytes": 96437
+    },
+    "stat": {
+        "totalObjSize": 329414,
+        "CodeGen(%)": 50.013461849119594,
+        "ru_self_cgstart": {
+            "ru_majflt": 0,
+            "ru_utime_sec": 0.111396,
+            "ru_maxrss_kb": 59996,
+            "ru_stime_sec": 0.048170999999999999,
+            "ru_minflt": 14391,
+            "ru_nivcsw": 19,
+            "ru_nvcsw": 245
+        },
+        "mop/quad": 2.8088930936613057,
+        "ru_childs_cgstart": {
+            "ru_majflt": 0,
+            "ru_utime_sec": 0.0017409999999999999,
+            "ru_maxrss_kb": 21536,
+            "ru_stime_sec": 0.0052249999999999996,
+            "ru_minflt": 582,
+            "ru_nivcsw": 2,
+            "ru_nvcsw": 2
+        },
+        "outputSizePerQuad": 103.0,
+        "ru_childs_end": {
+            "ru_majflt": 0,
+            "ru_utime_sec": 0.0017409999999999999,
+            "ru_maxrss_kb": 21536,
+            "ru_stime_sec": 0.0052249999999999996,
+            "ru_minflt": 582,
+            "ru_nivcsw": 2,
+            "ru_nvcsw": 2
+        },
+        "Frontend(%)": 49.986538150880406,
+        "nMops": 8907,
+        "nQuads": 3171,
+        "ru_self_end": {
+            "ru_majflt": 0,
+            "ru_utime_sec": 0.22285199999999999,
+            "ru_maxrss_kb": 67372,
+            "ru_stime_sec": 0.070212999999999998,
+            "ru_minflt": 17034,
+            "ru_nivcsw": 21,
+            "ru_nvcsw": 365
+        },
+        "mopSpeed": 79914.94401378122,
+        "quadSpeed": 28450.689061154178
+    },
+    "PEModules": [],
+    "CurCompileUdps": {},
+    "CompileStatus": "Successful",
+    "CurCompileModules": [
+        "...MASTER...",
+        "_vcs_unit__136250082",
+        "std",
+        "tb_top",
+        "parallel_ctr_4in",
+        "par_acc_4lanes",
+        "par_acc_8lanes",
+        "par_acc_16lanes",
+        "par_acc_32lanes",
+        "sng_dsc",
+        "sng_dsc_max",
+        "sng_dsc_min",
+        "sng_sc_8bit",
+        "CAS"
+    ],
+    "LVLData": [
+        "SIM"
+    ],
+    "CompileProcesses": [
+        "cgproc.38053.json"
+    ]
+}
