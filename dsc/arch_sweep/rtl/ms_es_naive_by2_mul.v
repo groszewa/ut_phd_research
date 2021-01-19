@@ -1,7 +1,7 @@
 `timescale 1 ns / 100 ps
 
 
-module ms_es_naive_by2_mul #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2) (
+module ms_es_naive_by2_mul #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2, WXIP1=1) (
 	clk,
 	rst,
 	en,

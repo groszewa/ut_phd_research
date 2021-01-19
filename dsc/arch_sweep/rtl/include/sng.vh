@@ -89,17 +89,21 @@ counter #(.WIDTH(WIDTH), .STRIDE(1)) ctr (
    
 endmodule //sng_dsc_multi
 
-module dsc_max #(parameter NUM_INPUTS) (in,out);
-   input [NUM_INPUTS-1:0] in;
-   output                 out;
-   assign out = |in;
-endmodule // dsc_max
+//module dsc_max #(parameter NUM_INPUTS) (
+//    data_in,
+//    data_out
+//    );
+//   
+//    input [NUM_INPUTS-1:0] data_in;
+//    output                 data_out;
+//    assign data_out = |data_in;
+//endmodule // dsc_max
   
-module dsc_min #(parameter NUM_INPUTS) (in,out);
-   input [NUM_INPUTS-1:0] in;
-   output                 out;
-   assign out = &in;
-endmodule // dsc_min
+//module dsc_min #(parameter NUM_INPUTS) (data_in,data_out);
+//   input [NUM_INPUTS-1:0] data_in;
+//   output                 data_out;
+//   assign data_out = &data_in;
+//endmodule // dsc_min
 
 module sng_dsc_max #(parameter DATA_WIDTH=4, parameter NUM_INPUTS=1) (
 	clk,
@@ -128,8 +132,8 @@ sng_dsc_multi #(.WIDTH(DATA_WIDTH),.NUM_INPUTS(NUM_INPUTS)) sng_multi (
 .ctr_overflow(ctr_overflow)                                                                 
 );
    
-dsc_max #(.NUM_INPUTS(NUM_INPUTS)) max_gate(.in(sn_out_pre),.out(sn_out));
-   
+//dsc_max #(.NUM_INPUTS(NUM_INPUTS)) max_gate(.in(sn_out_pre),.out(sn_out));
+   assign sn_out = |sn_out_pre; 
    
 endmodule //sng_dsc_max
 
@@ -160,8 +164,9 @@ sng_dsc_multi #(.WIDTH(WIDTH),.NUM_INPUTS(NUM_INPUTS)) sng_multi (
 .ctr_overflow(ctr_overflow)                                                                 
 );
    
-dsc_min #(.NUM_INPUTS(NUM_INPUTS)) min_gate(.in(sn_out_pre),.out(sn_out)); 
-   
+  //dsc_min #(.NUM_INPUTS(NUM_INPUTS)) min_gate(.in(sn_out_pre),.out(sn_out)); 
+   assign sn_out = &sn_out_pre;
+ 
 endmodule //sng_dsc_min
 
 

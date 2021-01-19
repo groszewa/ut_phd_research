@@ -12,17 +12,6 @@ reg [15:0] lfsr;
 wire linear_feedback;
 assign linear_feedback = lfsr[15];
 
-initial begin
-  if(FLAVOR==0) begin
-    lfsr <= 16'haaaa;
-  end
-  else if (FLAVOR==1) begin
-    lfsr <= 16'h9999;  
-  end
- assign overflow = 0;  
-end
-
-     
 always @(posedge clk) begin
   countval <= lfsr;
   //out <= lfsr[0];

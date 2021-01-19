@@ -1,7 +1,7 @@
 `timescale 1 ns / 100 ps
 
 
-module es_naive_mul #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2) (
+module es_naive_mul #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2, parameter WXIP1=1) (
 	clk,
 	rst,
 	en,

@@ -40,6 +40,11 @@ else
 	./${NAME_TOP} +DEBUG +NUM_TESTS=10 +CYCLES_OVERRIDE=$(CYCLES_OVERRIDE) 
 endif
 
+run_file_debug:
+	./${NAME_TOP} +DEBUG +NUM_TESTS=10 +INPUT_DATA_FILE=$(INPUT_DATA_FILE) 
+
+run_file:
+	./${NAME_TOP} +NUM_TESTS=10 +INPUT_DATA_FILE=$(INPUT_DATA_FILE)  	
 
 # Start viewer
 viewer:

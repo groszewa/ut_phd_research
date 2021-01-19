@@ -41,7 +41,7 @@ module tb_top;
    
             
 
-core #(.DATA_WIDTH(DATA_WIDTH), .NUM_INPUTS(NUM_INPUTS)) core_inst (.*);
+core #(.DATA_WIDTH(DATA_WIDTH), .NUM_INPUTS(NUM_INPUTS), .WXIP1(WXIP1)) core_inst (.*);
    
 
    
@@ -92,13 +92,15 @@ always
 
    
 
-       //need vcd for power simulation
-       $dumpfile ("tb_top.vcd");
-       $dumpvars(0,tb_top);
+       if(debug_on) begin
+          //need vcd for power simulation
+          $dumpfile ("tb_top.vcd");
+          $dumpvars(0,tb_top);
 
-       //need vpd for better viewing
-       $vcdplusfile("tb_top.vpd");
-       $vcdpluson(0,tb_top);
+          //need vpd for better viewing
+          $vcdplusfile("tb_top.vpd");
+          $vcdpluson(0,tb_top);
+       end
        
        
     $display($time, " << Starting the Simulation >>");
@@ -187,7 +189,7 @@ always
         
                   absolute_error_acc += ae;
                end else begin // if (calc_mae) 
-                  $fatal("ERROR : RTL(%6d) != EXPECTED(%6d)",frac_data_out,expected_result_frac);
+                  $fatal("ERROR : RTL(%0d) != EXPECTED(%0d)",bin_data_out,expected_result);
                end // if (!calc_mae)
             end // if (expected_result_frac !== frac_data_out)
             rst = 1;

@@ -1,0 +1,4 @@
+{{ data.get('tb_src_dir')  }}tb_top.sv
+{{ data.get('tb_src_dir')  }}{{ data.get('design') }}_tb.sv
+{{ data.get('rtl_src_dir') }}{{ data.get('design') }}.v
+{{ data.get('rtl_src_dir') }}modules.v
