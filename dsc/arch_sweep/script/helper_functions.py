@@ -3,6 +3,7 @@
 import sys
 import os
 import argparse
+from jinja2 import Environment, FileSystemLoader
 
 num_inputs_range_min = 2
 num_inputs_range_max = 6
@@ -69,7 +70,7 @@ def get_design_name_from_command_line() :
     return args.design
 
 
-def populate_template_dict_global(design_name, num_inputs, data_width):
+def populate_template_dict_global(design_name):
     model_root   = get_model_root()
     lib_dir      = model_root + 'libs/'
     tb_src_dir   = model_root + 'testbench/'
@@ -107,5 +108,12 @@ def populate_template_dict_per_config(design_name, num_inputs, data_width):
     template_dict['wxip1']         = (num_inputs*data_width)+1
     template_dict['min_cycle_dsc'] = pow(2, num_inputs*data_width)
 
+def get_template_parser():
+    file_loader = FileSystemLoader(template_dict.get('template_dir'))
+    env = Environment(loader=file_loader)
+    env.trim_blocks = True
+    env.lstrip_blocks = True
+    env.rstrip_blocks = True
+    return env
 
 

@@ -6,15 +6,6 @@ import sys
 import os
 from shutil import copyfile
 
-def get_template_parser():
-    file_loader = FileSystemLoader(template_dict.get('template_dir'))
-    env = Environment(loader=file_loader)
-    env.trim_blocks = True
-    env.lstrip_blocks = True
-    env.rstrip_blocks = True
-    return env
-    
-
 def get_elaborated_rc_tcl(env):
     template = env.get_template('template_rc.tcl')
     return template.render(data=template_dict)
@@ -102,12 +93,10 @@ def gen_file_collateral_all(design_name, env_parser):
 def main():
     check_if_env_set_up()
     design_name = get_design_name_from_command_line()
-    num_inputs  = 2
-    data_width  = 6
-    pass_string = "{} : Building RTL and Synth collateral for {} design".format(sys.argv[0], design_name)
+    pass_string = "Building RTL and Synth collateral for {} design".format(design_name)
 
     check_if_valid_design(design_name, pass_string)
-    populate_template_dict_global(design_name, num_inputs, data_width)
+    populate_template_dict_global(design_name)
     env_parser = get_template_parser()
     gen_file_collateral_all(design_name,env_parser)
     print("Done! :)")
