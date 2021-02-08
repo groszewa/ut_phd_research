@@ -38,3 +38,6 @@
     -->
   * es_naive_mul_tb.sv   
     -->
+
+Git stuff:
+git config credential.helper store
