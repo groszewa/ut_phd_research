@@ -15,6 +15,11 @@
 	(x<=512)  ? 9   : \
 	(x<=1024) ? 10  : -1
 
+`define STRIDE_OVERFLOW_LSB(stride,width) \
+        (stride==1) ? 0 : \
+        (stride==2) ? 1 : \
+        (stride==4) ? ((width==2) ? 0 : 2 ) : -1
+
 `include "counters.vh"
 `include "adders.vh"
 `include "parallel_acc.vh"

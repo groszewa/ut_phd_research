@@ -105,7 +105,7 @@ endmodule //sng_dsc_multi
 //   assign data_out = &data_in;
 //endmodule // dsc_min
 
-module sng_dsc_max #(parameter DATA_WIDTH=4, parameter NUM_INPUTS=1) (
+module sng_dsc_max #(parameter WIDTH=4, parameter NUM_INPUTS=1) (
 	clk,
 	rst,
 	en,
@@ -116,14 +116,14 @@ module sng_dsc_max #(parameter DATA_WIDTH=4, parameter NUM_INPUTS=1) (
 
 
 input 			  clk,rst,en;
-input [DATA_WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
 
 output ctr_overflow;
 output sn_out;
            
 wire [NUM_INPUTS-1:0] sn_out_pre;
    
-sng_dsc_multi #(.WIDTH(DATA_WIDTH),.NUM_INPUTS(NUM_INPUTS)) sng_multi (
+sng_dsc_multi #(.WIDTH(WIDTH),.NUM_INPUTS(NUM_INPUTS)) sng_multi (
 .clk(clk),
 .rst(rst),
 .en(en),

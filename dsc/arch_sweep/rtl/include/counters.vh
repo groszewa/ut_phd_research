@@ -17,11 +17,15 @@ module counter #(parameter WIDTH=4, parameter STRIDE=1) (
 
 	always @(posedge clk or posedge rst) begin
 		if(rst) begin
-			countval <= 0;
-			overflow <= 0;
+		   countval <= 0;
+		   overflow <= 0;
 		end else if (en) begin
-			countval <= countval + STRIDE;
-			overflow <= (&countval[WIDTH-1:`CLOG2(STRIDE)]);
+		   countval <= countval + STRIDE;
+           if(WIDTH==2 && STRIDE==4) begin
+              overflow <= 1;
+           end else begin
+		      overflow <= (&countval[WIDTH-1:`STRIDE_OVERFLOW_LSB(STRIDE,WIDTH)]);
+           end
 		end // else if (en)
 	end //always
 endmodule // counter

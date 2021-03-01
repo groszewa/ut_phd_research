@@ -65,16 +65,15 @@ module ms_serial_by4_mul #(parameter DATA_WIDTH=5, parameter NUM_INPUTS=2, param
       assign bs_data_out[4]  = bs_data_in[0][1] & bs_data_in[1][0];
       assign bs_data_out[5]  = bs_data_in[0][1] & bs_data_in[1][1];
       assign bs_data_out[6]  = bs_data_in[0][1] & bs_data_in[1][2];
-      assign bs_data_out[7]  = bs_data_in[0][1] & bs_data_in[1][3];
+      assign bs_data_out[7]  = bs_data_in[0][1] & bs_data_in[1][3]; 
       assign bs_data_out[8]  = bs_data_in[0][2] & bs_data_in[1][0];
       assign bs_data_out[9]  = bs_data_in[0][2] & bs_data_in[1][1];
       assign bs_data_out[10] = bs_data_in[0][2] & bs_data_in[1][2];
-      assign bs_data_out[11] = bs_data_in[0][2] & bs_data_in[1][3];
+      assign bs_data_out[11] = bs_data_in[0][2] & bs_data_in[1][3];   
       assign bs_data_out[12] = bs_data_in[0][3] & bs_data_in[1][0];
       assign bs_data_out[13] = bs_data_in[0][3] & bs_data_in[1][1];
       assign bs_data_out[14] = bs_data_in[0][3] & bs_data_in[1][2];
-      assign bs_data_out[15] = bs_data_in[0][3] & bs_data_in[1][3];
-      
+      assign bs_data_out[15] = bs_data_in[0][3] & bs_data_in[1][3]; 
 
       par_acc_16lanes  #(.WIDTH(DATA_WIDTH*NUM_INPUTS)) stoch2bin (
         .clk(clk),

@@ -111,13 +111,7 @@ always
        for(int i=0; i<NUM_INPUTS;i++) begin : init_loop
           bin_data_in[i] = '0;
        end // init_loop
-       
-       #10
-       rst = 0;
-       
-       #10
-       en  = 1;  
-     
+
        for(test=0;test<NUM_TESTS;test++)
          begin
             for(int i=0;i<NUM_INPUTS;i++) begin : randomize_loop
@@ -188,8 +182,12 @@ always
                   $display("MISMATCH : Test %4d : cycles_count=%10d, output=%f (%6d/%10d), expected=%f (%6d/%10d), AE=%f", test, cycle_count, frac_data_out , bin_data_out, denom, expected_result_frac,expected_result,MIN_CYC_DSC, ae);
         
                   absolute_error_acc += ae;
-               end else begin // if (calc_mae) 
-                  $fatal("ERROR : RTL(%0d) != EXPECTED(%0d)",bin_data_out,expected_result);
+               end else begin // if (calc_mae)
+                  if(debug_on) begin                     
+                     $display("ERROR : RTL(%0d) != EXPECTED(%0d)",bin_data_out,expected_result);
+                  end else begin
+                     $fatal("ERROR : RTL(%0d) != EXPECTED(%0d)",bin_data_out,expected_result);
+                  end                                  
                end // if (!calc_mae)
             end // if (expected_result_frac !== frac_data_out)
             rst = 1;

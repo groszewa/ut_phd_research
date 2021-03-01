@@ -16,7 +16,7 @@ set_attribute library [list ${libname} ]
 
 set design_top ${design}_synth
 
-set myfiles [list params.vh modules.v ${design}.v ${design_top}.v]
+set myfiles [list modules.v ${design}.v ${design_top}.v]
 
 read_hdl -sv ${myfiles}
 

@@ -23,7 +23,6 @@ def get_compile_status(design_name, sim_dir):
 def compile_single_design(design_name, num_inputs, data_width, env_parser):
     populate_template_dict_per_config(design_name, num_inputs, data_width)
     config_name = template_dict.get('config_name')
-    extra_space_if_needed = ' ' if (data_width<10) else ''
     sim_dir    = template_dict.get('sim_dir')
     clean_sim_dir_quiet(sim_dir, design_name, config_name)
     run_rtl_compile(sim_dir, design_name, config_name, data_width)
@@ -36,8 +35,6 @@ def compile_all_designs(design_name, env_parser):
 def main():
     check_if_env_set_up()
     design_name = get_design_name_from_command_line()
-    num_inputs  = 2
-    data_width  = 6
     pass_string = "Compiling and simulating {} design".format(design_name)
     check_if_valid_design(design_name, pass_string)
     populate_template_dict_global(design_name)

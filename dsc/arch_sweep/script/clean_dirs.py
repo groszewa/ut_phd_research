@@ -22,7 +22,6 @@ def clean_sim_dir_quiet(sim_dir, design_name, config_name):
 
 
 def clean_synth_dir(synth_dir, design_name, config_name):
-    #print("\tCleaning {}/{}/synth".format(design_name, config_name))
     sub.call(['make','clean']  ,cwd=synth_dir, stdout=sub.DEVNULL, stderr=sub.DEVNULL)
 
 
