@@ -37,7 +37,7 @@ endif
 
 # Start viewer
 viewer:
-	dve -full64 -vpd tb_top.vpd -&
+	dve -full64 -vpd tb_top.vpd &
 
 #----- Cleanup
 # Delete temporary files

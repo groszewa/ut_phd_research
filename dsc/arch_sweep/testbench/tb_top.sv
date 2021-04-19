@@ -107,6 +107,8 @@ always
        gclk = 0;
        en = 0;
        rst = 1;
+
+       #10
        
        for(int i=0; i<NUM_INPUTS;i++) begin : init_loop
           bin_data_in[i] = '0;
