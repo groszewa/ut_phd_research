@@ -169,6 +169,263 @@ sng_dsc_multi #(.WIDTH(WIDTH),.NUM_INPUTS(NUM_INPUTS)) sng_multi (
  
 endmodule //sng_dsc_min
 
+module sng_dsc_mid_of3 #(parameter WIDTH=4, parameter NUM_INPUTS=1) (
+	clk,
+	rst,
+	en,
+	bin_in,
+	sn_out,
+	ctr_overflow
+);
+
+
+input 			  clk,rst,en;
+input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+
+output ctr_overflow;
+output sn_out;
+           
+wire [NUM_INPUTS-1:0] sn_out_pre;
+wire               ab_max, ab_min, abminc_max;
+   
+   
+sng_dsc_multi #(.WIDTH(WIDTH),.NUM_INPUTS(NUM_INPUTS)) sng_multi (
+.clk(clk),
+.rst(rst),
+.en(en),
+.bin_in(bin_in),
+.sn_out(sn_out_pre),
+.ctr_overflow(ctr_overflow)                                                                 
+);
+   
+  //dsc_min #(.NUM_INPUTS(NUM_INPUTS)) min_gate(.in(sn_out_pre),.out(sn_out)); 
+   assign ab_max = sn_out_pre[0] | sn_out_pre[1];
+   assign ab_min = sn_out_pre[0] & sn_out_pre[1];
+   assign abminc_max = ab_min | sn_out_pre[2];
+   assign sn_out = ab_max & abminc_max;
+ 
+endmodule //sng_dsc_mid_of3
+
+module sng_dsc_second_smallest_of4 #(parameter WIDTH=4, parameter NUM_INPUTS=1) (
+	clk,
+	rst,
+	en,
+	bin_in,
+	sn_out,
+	ctr_overflow
+);
+
+
+input 			  clk,rst,en;
+input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+
+output ctr_overflow;
+output sn_out;
+           
+wire [NUM_INPUTS-1:0] sn_out_pre;
+wire               ab_max, ab_min, cd_max, cd_min;
+wire               stage1_max, stage1_min;
+   
+   
+   
+sng_dsc_multi #(.WIDTH(WIDTH),.NUM_INPUTS(NUM_INPUTS)) sng_multi (
+.clk(clk),
+.rst(rst),
+.en(en),
+.bin_in(bin_in),
+.sn_out(sn_out_pre),
+.ctr_overflow(ctr_overflow)                                                                 
+);
+   
+  //dsc_min #(.NUM_INPUTS(NUM_INPUTS)) min_gate(.in(sn_out_pre),.out(sn_out)); 
+   assign ab_max = sn_out_pre[0] | sn_out_pre[1];
+   assign ab_min = sn_out_pre[0] & sn_out_pre[1];
+   assign cd_max = sn_out_pre[2] | sn_out_pre[3];
+   assign cd_min = sn_out_pre[2] & sn_out_pre[3];
+
+   assign stage1_min = ab_max & cd_max;
+   assign stage1_max = ab_min | cd_min;
+   
+   assign sn_out = stage1_max & stage1_min;
+ 
+endmodule //sng_dsc_second_smallest_of4
+
+module sng_dsc_second_largest_of4 #(parameter WIDTH=4, parameter NUM_INPUTS=1) (
+	clk,
+	rst,
+	en,
+	bin_in,
+	sn_out,
+	ctr_overflow
+);
+
+
+input 			  clk,rst,en;
+input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+
+output ctr_overflow;
+output sn_out;
+           
+wire [NUM_INPUTS-1:0] sn_out_pre;
+wire               ab_max, ab_min, cd_max, cd_min;
+wire               stage1_max, stage1_min;
+   
+   
+   
+sng_dsc_multi #(.WIDTH(WIDTH),.NUM_INPUTS(NUM_INPUTS)) sng_multi (
+.clk(clk),
+.rst(rst),
+.en(en),
+.bin_in(bin_in),
+.sn_out(sn_out_pre),
+.ctr_overflow(ctr_overflow)                                                                 
+);
+   
+  //dsc_min #(.NUM_INPUTS(NUM_INPUTS)) min_gate(.in(sn_out_pre),.out(sn_out)); 
+   assign ab_max = sn_out_pre[0] | sn_out_pre[1];
+   assign ab_min = sn_out_pre[0] & sn_out_pre[1];
+   assign cd_max = sn_out_pre[2] | sn_out_pre[3];
+   assign cd_min = sn_out_pre[2] & sn_out_pre[3];
+
+   assign stage1_min = ab_max & cd_max;
+   assign stage1_max = ab_min | cd_min;
+   
+   assign sn_out = stage1_max | stage1_min;
+ 
+endmodule //sng_dsc_second_largest_of4
+
+module sng_dsc_second_smallest_of5 #(parameter WIDTH=4, parameter NUM_INPUTS=1) (
+	clk,
+	rst,
+	en,
+	bin_in,
+	sn_out,
+	ctr_overflow
+);
+input 			  clk,rst,en;
+input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+output ctr_overflow;
+output sn_out;
+wire [NUM_INPUTS-1:0] sn_out_pre;
+wire                  bc_max, bc_min, de_max, de_min;
+wire                  stage1_max, stage1_min1, stage1_min2;
+wire                  stage2_max, stage2_min;
+sng_dsc_multi #(.WIDTH(WIDTH),.NUM_INPUTS(NUM_INPUTS)) sng_multi (
+.clk(clk),
+.rst(rst),
+.en(en),
+.bin_in(bin_in),
+.sn_out(sn_out_pre),
+.ctr_overflow(ctr_overflow)                                                                 
+);
+   assign bc_max = sn_out_pre[1] | sn_out_pre[2];
+   assign bc_min = sn_out_pre[1] & sn_out_pre[2];
+   assign de_max = sn_out_pre[3] | sn_out_pre[4];
+   assign de_min = sn_out_pre[3] & sn_out_pre[4];
+
+   assign stage1_max  = sn_out_pre[0] | bc_min;
+   assign stage1_min1 = sn_out_pre[0] & bc_min;
+   assign stage1_min2 = bc_max        & de_max;
+
+   assign stage2_min  = stage1_max  & stage1_min2;
+   assign stage2_max  = stage1_min1 | de_min;
+
+   assign sn_out      = stage2_min & stage2_max;
+ 
+endmodule //sng_dsc_second_smallest_of5
+
+module sng_dsc_second_largest_of5 #(parameter WIDTH=4, parameter NUM_INPUTS=1) (
+	clk,
+	rst,
+	en,
+	bin_in,
+	sn_out,
+	ctr_overflow
+);
+input 			  clk,rst,en;
+input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+output ctr_overflow;
+output sn_out;
+wire [NUM_INPUTS-1:0] sn_out_pre;
+wire                  bc_max, bc_min, de_max, de_min;
+wire                  stage1_max1, stage1_max2, stage1_min1, stage1_min2;
+wire                  stage2_max1, stage2_max2, stage2_min;
+wire                  stage3_max, stage3_min;
+sng_dsc_multi #(.WIDTH(WIDTH),.NUM_INPUTS(NUM_INPUTS)) sng_multi (
+.clk(clk),
+.rst(rst),
+.en(en),
+.bin_in(bin_in),
+.sn_out(sn_out_pre),
+.ctr_overflow(ctr_overflow)                                                                 
+);
+   assign bc_max = sn_out_pre[1] | sn_out_pre[2];
+   assign bc_min = sn_out_pre[1] & sn_out_pre[2];
+   assign de_max = sn_out_pre[3] | sn_out_pre[4];
+   assign de_min = sn_out_pre[3] & sn_out_pre[4];
+
+   assign stage1_max1  = sn_out_pre[0] | bc_min;
+   assign stage1_max2  = bc_max        | de_max;
+   assign stage1_min1  = sn_out_pre[0] & bc_min;
+   assign stage1_min2  = bc_max        & de_max;
+
+   assign stage2_min   = stage1_max1  & stage1_min2;
+   assign stage2_max1  = stage1_max1  | stage1_min2;
+   assign stage2_max2  = stage1_min1  | de_min;
+
+   assign stage3_min   = stage2_max1 & stage1_max2;
+   assign stage3_max   = stage2_min  | stage2_max2;
+   
+   assign sn_out      = stage3_min | stage3_max;
+   
+endmodule //sng_dsc_second_largest_of5
+
+module sng_dsc_mid_of5 #(parameter WIDTH=4, parameter NUM_INPUTS=1) (
+	clk,
+	rst,
+	en,
+	bin_in,
+	sn_out,
+	ctr_overflow
+);
+input 			  clk,rst,en;
+input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+output ctr_overflow;
+output sn_out;
+wire [NUM_INPUTS-1:0] sn_out_pre;
+wire                  bc_max, bc_min, de_max, de_min;
+wire                  stage1_max1, stage1_max2, stage1_min1, stage1_min2;
+wire                  stage2_max1, stage2_max2, stage2_min;
+wire                  stage3_max, stage3_min;
+sng_dsc_multi #(.WIDTH(WIDTH),.NUM_INPUTS(NUM_INPUTS)) sng_multi (
+.clk(clk),
+.rst(rst),
+.en(en),
+.bin_in(bin_in),
+.sn_out(sn_out_pre),
+.ctr_overflow(ctr_overflow)                                                                 
+);
+   assign bc_max = sn_out_pre[1] | sn_out_pre[2];
+   assign bc_min = sn_out_pre[1] & sn_out_pre[2];
+   assign de_max = sn_out_pre[3] | sn_out_pre[4];
+   assign de_min = sn_out_pre[3] & sn_out_pre[4];
+
+   assign stage1_max1  = sn_out_pre[0] | bc_min;
+   assign stage1_max2  = bc_max        | de_max;
+   assign stage1_min1  = sn_out_pre[0] & bc_min;
+   assign stage1_min2  = bc_max        & de_max;
+
+   assign stage2_min   = stage1_max1  & stage1_min2;
+   assign stage2_max1  = stage1_max1  | stage1_min2;
+   assign stage2_max2  = stage1_min1  | de_min;
+
+   assign stage3_min   = stage2_max1 & stage1_max2;
+   assign stage3_max   = stage2_min  | stage2_max2;
+   
+   assign sn_out      = stage3_min & stage3_max;
+ 
+endmodule //sng_dsc_mid_of5
+
 
 //LFSR used for SC computation
 module sng_sc_8bit #(parameter FLAVOR=0) (

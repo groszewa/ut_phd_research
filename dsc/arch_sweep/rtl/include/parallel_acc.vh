@@ -350,5 +350,34 @@ module par_acc_256lanes #(parameter WIDTH=4) (
      );
 endmodule // par_acc_256lanes
 
+module par_acc_1024lanes #(parameter WIDTH=4) (
+  clk,
+  rst,
+  data_in,
+  countval,
+  overflow                     
+);
+   input clk, rst;
+   input [1023:0] data_in;
+   output [WIDTH-1:0] countval;
+   output       overflow;
+   wire [10:0]   par_acc_int;
+   wire         ctr_en;
+   parallel_ctr_1024in par_ctr (
+     .a(data_in),
+     .y(par_acc_int)                   
+   );
+   //any of the bits of accumulator being 1 will trigger increment
+   assign ctr_en = |par_acc_int;
+   counter_input #(.WIDTH(WIDTH)) ctr (
+     .clk(clk),
+     .rst(rst),
+     .en(ctr_en),
+     .data_in(par_acc_int),  
+     .countval(countval),
+     .overflow(overflow)                     
+     );
+endmodule // par_acc_1024lanes
+
 
 `endif

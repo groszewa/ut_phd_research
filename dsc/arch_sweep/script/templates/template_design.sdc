@@ -20,5 +20,9 @@ set_load 0.01 [all_outputs]
 
 {% for i in range(1,data.get('num_inputs')) -%}
 #create generated clock at input of prg[{{ i }}] since the "clock" is overflow signal of prg[{{ i-1 }}]
+{% if ('_bs_' in data.get('design')) and (i != (data.get('num_inputs')-1)) -%}
+create_generated_clock -source [get_ports clk] -name clk_int{{ i }} -divide_by 1 /designs/{{ data.get('design') }}_synth/instances_hier/TOP/instances_hier/genblk1[{{ i }}].genblk1.genblk{{ i }}.sng/pins_in/clk
+{% else -%}
 create_generated_clock -source [get_ports clk] -name clk_int{{ i }} -divide_by 1 /designs/{{ data.get('design') }}_synth/instances_hier/TOP/instances_hier/genblk1[{{ i }}].genblk1.sng/pins_in/clk
+{% endif -%}
 {% endfor %}
