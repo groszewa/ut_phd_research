@@ -2,7 +2,6 @@
 use strict;
 use warnings;
 
-print("Hello!\n");
 my $counter = 0;
 for(my $v=0;$v<4;$v++) {
     for(my $w=0;$w<4;$w++) {
