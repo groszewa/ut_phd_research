@@ -426,6 +426,404 @@ sng_dsc_multi #(.WIDTH(WIDTH),.NUM_INPUTS(NUM_INPUTS)) sng_multi (
  
 endmodule //sng_dsc_mid_of5
 
+//rework of SNG for ms_es_bs
+module min_comparator #(parameter WIDTH=4, parameter NUM_INPUTS=2) (bin_in, counter_in, sn_out);
+   input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+   input [WIDTH-1:0] counter_in;
+   output            sn_out;
+   wire [NUM_INPUTS-1:0] compare_result;
+   genvar        i;
+   generate
+      for(i=0;i<NUM_INPUTS;i++) begin
+         assign compare_result[i] = (bin_in[i] > counter_in);
+      end
+   endgenerate
+   assign sn_out = &compare_result;
+endmodule // min_comparator
+
+module sng_dsc_ms_min  #(parameter WIDTH=4, parameter NUM_INPUTS=2, parameter STRIDE=2)
+   (clk, rst, en, bin_in, sn_out, ctr_overflow);
+   input 			   clk,rst,en;
+   input [WIDTH-1:0]   bin_in [NUM_INPUTS-1:0];
+   output              ctr_overflow;
+   output [STRIDE-1:0] sn_out;
+   wire [WIDTH-1:0]    ctr_out [STRIDE-1:0];
+   genvar             i;
+   counter #(.WIDTH(WIDTH), .STRIDE(STRIDE)) ctr (
+	.clk(clk),
+	.rst(rst),
+	.en(en),
+	.countval(ctr_out[0]),
+	.overflow(ctr_overflow));
+   generate
+      for(i=1;i<STRIDE;i++) begin
+         assign ctr_out[i] = ctr_out[0] + i;
+      end
+      for(i=0;i<STRIDE;i++) begin
+         min_comparator #(.WIDTH(WIDTH), .NUM_INPUTS(NUM_INPUTS)) min_comparator(.bin_in(bin_in), .counter_in(ctr_out[i]), .sn_out(sn_out[i]));
+      end
+   endgenerate
+endmodule // sng_dsc_ms_min
+
+module max_comparator #(parameter WIDTH=4, parameter NUM_INPUTS=2) (bin_in, counter_in, sn_out);
+   input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+   input [WIDTH-1:0] counter_in;
+   output            sn_out;
+   wire [NUM_INPUTS-1:0] compare_result;
+   genvar        i;
+   generate
+      for(i=0;i<NUM_INPUTS;i++) begin
+         assign compare_result[i] = (bin_in[i] > counter_in);
+      end
+   endgenerate
+   assign sn_out = |compare_result;
+endmodule // max_comparator
+
+module sng_dsc_ms_max  #(parameter WIDTH=4, parameter NUM_INPUTS=2, parameter STRIDE=2)
+   (clk, rst, en, bin_in, sn_out, ctr_overflow);
+   input 			   clk,rst,en;
+   input  [WIDTH-1:0]  bin_in [NUM_INPUTS-1:0];
+   output              ctr_overflow;
+   output [STRIDE-1:0] sn_out;
+   wire   [WIDTH-1:0]  ctr_out [STRIDE-1:0];
+   genvar             i;
+   counter #(.WIDTH(WIDTH), .STRIDE(STRIDE)) ctr (
+	.clk(clk),
+	.rst(rst),
+	.en(en),
+	.countval(ctr_out[0]),
+	.overflow(ctr_overflow));
+   generate
+      for(i=1;i<STRIDE;i++) begin
+         assign ctr_out[i] = ctr_out[0] + i;
+      end
+      for(i=0;i<STRIDE;i++) begin
+         max_comparator #(.WIDTH(WIDTH), .NUM_INPUTS(NUM_INPUTS)) max_comparator(.bin_in(bin_in), .counter_in(ctr_out[i]), .sn_out(sn_out[i]));
+      end
+   endgenerate
+endmodule // sng_dsc_ms_max
+
+module mid_of3_comparator #(parameter WIDTH=4, parameter NUM_INPUTS=2) (bin_in, counter_in, sn_out);
+   input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+   input [WIDTH-1:0] counter_in;
+   output            sn_out;
+   wire [NUM_INPUTS-1:0] compare_result;
+   wire                  ab_max, ab_min, abminc_max, sn_out;
+   genvar        i;
+   generate
+      for(i=0;i<NUM_INPUTS;i++) begin
+         assign compare_result[i] = (bin_in[i] > counter_in);
+      end
+   endgenerate
+   assign ab_max = compare_result[0] | compare_result[1];
+   assign ab_min = compare_result[0] & compare_result[1];
+   assign abminc_max = ab_min | compare_result[2];
+   assign sn_out = ab_max & abminc_max;
+endmodule // mid_of3_comparator
+
+module sng_dsc_ms_mid_of3  #(parameter WIDTH=4, parameter NUM_INPUTS=2, parameter STRIDE=2)
+   (clk, rst, en, bin_in, sn_out, ctr_overflow);
+   input 			   clk,rst,en;
+   input  [WIDTH-1:0]  bin_in [NUM_INPUTS-1:0];
+   output              ctr_overflow;
+   output [STRIDE-1:0] sn_out;
+   wire   [WIDTH-1:0]  ctr_out [STRIDE-1:0];
+   genvar             i;
+   counter #(.WIDTH(WIDTH), .STRIDE(STRIDE)) ctr (
+	.clk(clk),
+	.rst(rst),
+	.en(en),
+	.countval(ctr_out[0]),
+	.overflow(ctr_overflow));
+   generate
+      for(i=1;i<STRIDE;i++) begin
+         assign ctr_out[i] = ctr_out[0] + i;
+      end
+      for(i=0;i<STRIDE;i++) begin
+         mid_of3_comparator #(.WIDTH(WIDTH), .NUM_INPUTS(NUM_INPUTS)) max_comparator(.bin_in(bin_in), .counter_in(ctr_out[i]), .sn_out(sn_out[i]));
+      end
+   endgenerate
+endmodule // sng_dsc_ms_max
+
+
+module second_largest_of4_comparator #(parameter WIDTH=4, parameter NUM_INPUTS=2) (bin_in, counter_in, sn_out);
+   input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+   input [WIDTH-1:0] counter_in;
+   output            sn_out;
+   wire [NUM_INPUTS-1:0] compare_result;
+   wire                  ab_max, ab_min, cd_max, cd_min;
+   wire                  stage1_min, stage1_max;
+   genvar        i;
+   generate
+      for(i=0;i<NUM_INPUTS;i++) begin
+         assign compare_result[i] = (bin_in[i] > counter_in);
+      end
+   endgenerate
+
+   assign ab_max = compare_result[0] | compare_result[1];
+   assign ab_min = compare_result[0] & compare_result[1];
+   assign cd_max = compare_result[2] | compare_result[3];
+   assign cd_min = compare_result[2] & compare_result[3];
+
+   assign stage1_min = ab_max & cd_max;
+   assign stage1_max = ab_min | cd_min;
+   
+   assign sn_out = stage1_max | stage1_min;
+
+endmodule // second_largest_of4_comparator
+
+module sng_dsc_ms_second_largest_of4  #(parameter WIDTH=4, parameter NUM_INPUTS=2, parameter STRIDE=2)
+   (clk, rst, en, bin_in, sn_out, ctr_overflow);
+   input 			   clk,rst,en;
+   input  [WIDTH-1:0]  bin_in [NUM_INPUTS-1:0];
+   output              ctr_overflow;
+   output [STRIDE-1:0] sn_out;
+   wire   [WIDTH-1:0]  ctr_out [STRIDE-1:0];
+   genvar             i;
+   counter #(.WIDTH(WIDTH), .STRIDE(STRIDE)) ctr (
+	.clk(clk),
+	.rst(rst),
+	.en(en),
+	.countval(ctr_out[0]),
+	.overflow(ctr_overflow));
+   generate
+      for(i=1;i<STRIDE;i++) begin
+         assign ctr_out[i] = ctr_out[0] + i;
+      end
+      for(i=0;i<STRIDE;i++) begin
+         second_largest_of4_comparator #(.WIDTH(WIDTH), .NUM_INPUTS(NUM_INPUTS)) max_comparator(.bin_in(bin_in), .counter_in(ctr_out[i]), .sn_out(sn_out[i]));
+      end
+   endgenerate
+endmodule // sng_dsc_ms_second_largest_of4
+
+module second_smallest_of4_comparator #(parameter WIDTH=4, parameter NUM_INPUTS=2) (bin_in, counter_in, sn_out);
+   input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+   input [WIDTH-1:0] counter_in;
+   output            sn_out;
+   wire [NUM_INPUTS-1:0] compare_result;
+   wire                  ab_max, ab_min, cd_max, cd_min;
+   wire                  stage1_min, stage1_max;
+   genvar        i;
+   generate
+      for(i=0;i<NUM_INPUTS;i++) begin
+         assign compare_result[i] = (bin_in[i] > counter_in);
+      end
+   endgenerate
+
+   assign ab_max = compare_result[0] | compare_result[1];
+   assign ab_min = compare_result[0] & compare_result[1];
+   assign cd_max = compare_result[2] | compare_result[3];
+   assign cd_min = compare_result[2] & compare_result[3];
+
+   assign stage1_min = ab_max & cd_max;
+   assign stage1_max = ab_min | cd_min;
+   
+   assign sn_out = stage1_max & stage1_min;
+
+endmodule // second_smallest_of4_comparator
+
+module sng_dsc_ms_second_smallest_of4  #(parameter WIDTH=4, parameter NUM_INPUTS=2, parameter STRIDE=2)
+   (clk, rst, en, bin_in, sn_out, ctr_overflow);
+   input 			   clk,rst,en;
+   input  [WIDTH-1:0]  bin_in [NUM_INPUTS-1:0];
+   output              ctr_overflow;
+   output [STRIDE-1:0] sn_out;
+   wire   [WIDTH-1:0]  ctr_out [STRIDE-1:0];
+   genvar             i;
+   counter #(.WIDTH(WIDTH), .STRIDE(STRIDE)) ctr (
+	.clk(clk),
+	.rst(rst),
+	.en(en),
+	.countval(ctr_out[0]),
+	.overflow(ctr_overflow));
+   generate
+      for(i=1;i<STRIDE;i++) begin
+         assign ctr_out[i] = ctr_out[0] + i;
+      end
+      for(i=0;i<STRIDE;i++) begin
+         second_smallest_of4_comparator #(.WIDTH(WIDTH), .NUM_INPUTS(NUM_INPUTS)) max_comparator(.bin_in(bin_in), .counter_in(ctr_out[i]), .sn_out(sn_out[i]));
+      end
+   endgenerate
+endmodule // sng_dsc_ms_second_smallest_of4
+
+module second_largest_of5_comparator #(parameter WIDTH=4, parameter NUM_INPUTS=2) (bin_in, counter_in, sn_out);
+   input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+   input [WIDTH-1:0] counter_in;
+   output            sn_out;
+   wire [NUM_INPUTS-1:0] compare_result;
+   wire                  bc_max, bc_min, de_max, de_min;
+   wire                  stage1_max1, stage1_min1, stage1_max2, stage1_min2;
+   wire                  stage2_min, stage2_max1, stage2_max2;
+   wire                  stage3_min, stage3_max;
+   genvar        i;
+   generate
+      for(i=0;i<NUM_INPUTS;i++) begin
+         assign compare_result[i] = (bin_in[i] > counter_in);
+      end
+   endgenerate
+   
+   assign bc_max = compare_result[1] | compare_result[2];
+   assign bc_min = compare_result[1] & compare_result[2];
+   assign de_max = compare_result[3] | compare_result[4];
+   assign de_min = compare_result[3] & compare_result[4];
+
+   assign stage1_max1  = compare_result[0] | bc_min;
+   assign stage1_max2  = bc_max        | de_max;
+   assign stage1_min1  = compare_result[0] & bc_min;
+   assign stage1_min2  = bc_max        & de_max;
+
+   assign stage2_min   = stage1_max1  & stage1_min2;
+   assign stage2_max1  = stage1_max1  | stage1_min2;
+   assign stage2_max2  = stage1_min1  | de_min;
+
+   assign stage3_min   = stage2_max1 & stage1_max2;
+   assign stage3_max   = stage2_min  | stage2_max2;
+   
+   assign sn_out      = stage3_min | stage3_max;
+
+endmodule // second_largest_of5_comparator
+
+module sng_dsc_ms_second_largest_of5  #(parameter WIDTH=4, parameter NUM_INPUTS=2, parameter STRIDE=2)
+   (clk, rst, en, bin_in, sn_out, ctr_overflow);
+   input 			   clk,rst,en;
+   input  [WIDTH-1:0]  bin_in [NUM_INPUTS-1:0];
+   output              ctr_overflow;
+   output [STRIDE-1:0] sn_out;
+   wire   [WIDTH-1:0]  ctr_out [STRIDE-1:0];
+   genvar             i;
+   counter #(.WIDTH(WIDTH), .STRIDE(STRIDE)) ctr (
+	.clk(clk),
+	.rst(rst),
+	.en(en),
+	.countval(ctr_out[0]),
+	.overflow(ctr_overflow));
+   generate
+      for(i=1;i<STRIDE;i++) begin
+         assign ctr_out[i] = ctr_out[0] + i;
+      end
+      for(i=0;i<STRIDE;i++) begin
+         second_largest_of5_comparator #(.WIDTH(WIDTH), .NUM_INPUTS(NUM_INPUTS)) max_comparator(.bin_in(bin_in), .counter_in(ctr_out[i]), .sn_out(sn_out[i]));
+      end
+   endgenerate
+endmodule // sng_dsc_ms_second_largest_of5
+
+module mid_of5_comparator #(parameter WIDTH=4, parameter NUM_INPUTS=2) (bin_in, counter_in, sn_out);
+   input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+   input [WIDTH-1:0] counter_in;
+   output            sn_out;
+   wire [NUM_INPUTS-1:0] compare_result;
+   wire                  bc_max, bc_min, de_max, de_min;
+   wire                  stage1_max1, stage1_min1, stage1_max2, stage1_min2;
+   wire                  stage2_min, stage2_max1, stage2_max2;
+   wire                  stage3_min, stage3_max;
+   genvar        i;
+   generate
+      for(i=0;i<NUM_INPUTS;i++) begin
+         assign compare_result[i] = (bin_in[i] > counter_in);
+      end
+   endgenerate
+   
+   assign bc_max = compare_result[1] | compare_result[2];
+   assign bc_min = compare_result[1] & compare_result[2];
+   assign de_max = compare_result[3] | compare_result[4];
+   assign de_min = compare_result[3] & compare_result[4];
+
+   assign stage1_max1  = compare_result[0] | bc_min;
+   assign stage1_max2  = bc_max        | de_max;
+   assign stage1_min1  = compare_result[0] & bc_min;
+   assign stage1_min2  = bc_max        & de_max;
+
+   assign stage2_min   = stage1_max1  & stage1_min2;
+   assign stage2_max1  = stage1_max1  | stage1_min2;
+   assign stage2_max2  = stage1_min1  | de_min;
+
+   assign stage3_min   = stage2_max1 & stage1_max2;
+   assign stage3_max   = stage2_min  | stage2_max2;
+   
+   assign sn_out      = stage3_min & stage3_max;
+
+endmodule // mid_of5_comparator
+
+module sng_dsc_ms_mid_of5  #(parameter WIDTH=4, parameter NUM_INPUTS=2, parameter STRIDE=2)
+   (clk, rst, en, bin_in, sn_out, ctr_overflow);
+   input 			   clk,rst,en;
+   input  [WIDTH-1:0]  bin_in [NUM_INPUTS-1:0];
+   output              ctr_overflow;
+   output [STRIDE-1:0] sn_out;
+   wire   [WIDTH-1:0]  ctr_out [STRIDE-1:0];
+   genvar             i;
+   counter #(.WIDTH(WIDTH), .STRIDE(STRIDE)) ctr (
+	.clk(clk),
+	.rst(rst),
+	.en(en),
+	.countval(ctr_out[0]),
+	.overflow(ctr_overflow));
+   generate
+      for(i=1;i<STRIDE;i++) begin
+         assign ctr_out[i] = ctr_out[0] + i;
+      end
+      for(i=0;i<STRIDE;i++) begin
+         mid_of5_comparator #(.WIDTH(WIDTH), .NUM_INPUTS(NUM_INPUTS)) max_comparator(.bin_in(bin_in), .counter_in(ctr_out[i]), .sn_out(sn_out[i]));
+      end
+   endgenerate
+endmodule // sng_dsc_ms_mid_of5
+
+module second_smallest_of5_comparator #(parameter WIDTH=4, parameter NUM_INPUTS=2) (bin_in, counter_in, sn_out);
+   input [WIDTH-1:0] bin_in [NUM_INPUTS-1:0];
+   input [WIDTH-1:0] counter_in;
+   output            sn_out;
+   wire [NUM_INPUTS-1:0] compare_result;
+   wire                  bc_max, bc_min, de_max, de_min;
+   wire                  stage1_max, stage1_min1, stage1_min2;
+   wire                  stage2_min, stage2_max;
+   genvar        i;
+   generate
+      for(i=0;i<NUM_INPUTS;i++) begin
+         assign compare_result[i] = (bin_in[i] > counter_in);
+      end
+   endgenerate
+   
+   assign bc_max = compare_result[1] | compare_result[2];
+   assign bc_min = compare_result[1] & compare_result[2];
+   assign de_max = compare_result[3] | compare_result[4];
+   assign de_min = compare_result[3] & compare_result[4];
+
+   assign stage1_max  = compare_result[0] | bc_min;
+   assign stage1_min1 = compare_result[0] & bc_min;
+   assign stage1_min2 = bc_max        & de_max;
+
+   assign stage2_min  = stage1_max  & stage1_min2;
+   assign stage2_max  = stage1_min1 | de_min;
+
+   assign sn_out      = stage2_min & stage2_max;
+
+
+endmodule // second_smallest_of5_comparator
+
+module sng_dsc_ms_second_smallest_of5  #(parameter WIDTH=4, parameter NUM_INPUTS=2, parameter STRIDE=2)
+   (clk, rst, en, bin_in, sn_out, ctr_overflow);
+   input 			   clk,rst,en;
+   input  [WIDTH-1:0]  bin_in [NUM_INPUTS-1:0];
+   output              ctr_overflow;
+   output [STRIDE-1:0] sn_out;
+   wire   [WIDTH-1:0]  ctr_out [STRIDE-1:0];
+   genvar             i;
+   counter #(.WIDTH(WIDTH), .STRIDE(STRIDE)) ctr (
+	.clk(clk),
+	.rst(rst),
+	.en(en),
+	.countval(ctr_out[0]),
+	.overflow(ctr_overflow));
+   generate
+      for(i=1;i<STRIDE;i++) begin
+         assign ctr_out[i] = ctr_out[0] + i;
+      end
+      for(i=0;i<STRIDE;i++) begin
+         second_smallest_of5_comparator #(.WIDTH(WIDTH), .NUM_INPUTS(NUM_INPUTS)) max_comparator(.bin_in(bin_in), .counter_in(ctr_out[i]), .sn_out(sn_out[i]));
+      end
+   endgenerate
+endmodule // sng_dsc_ms_second_smallest_of5
+
 
 //LFSR used for SC computation
 module sng_sc_8bit #(parameter FLAVOR=0) (
