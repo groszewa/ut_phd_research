@@ -30,7 +30,7 @@ def simulate_single_design(design_name, num_inputs, data_width, env_parser):
 
 def simulate_all_designs(design_name, env_parser):
     for num_inputs in range(num_inputs_range_min, num_inputs_range_max):
-        for data_width in range(data_width_range_min, data_width_range_max): 
+        for data_width in range(data_width_range_min, 5): 
             simulate_single_design(design_name, num_inputs, data_width, env_parser)            
 
 def main():

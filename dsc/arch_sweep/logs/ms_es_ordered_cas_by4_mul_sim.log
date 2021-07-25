@@ -1,0 +1,14 @@
+Simulating ms_es_ordered_cas_by4_mul design
+	Simulating ms_es_ordered_cas_by4_mul/i2d2  : PASS
+	Simulating ms_es_ordered_cas_by4_mul/i2d3  : PASS
+	Simulating ms_es_ordered_cas_by4_mul/i2d4  : PASS
+	Simulating ms_es_ordered_cas_by4_mul/i3d2  : PASS
+	Simulating ms_es_ordered_cas_by4_mul/i3d3  : PASS
+	Simulating ms_es_ordered_cas_by4_mul/i3d4  : PASS
+	Simulating ms_es_ordered_cas_by4_mul/i4d2  : PASS
+	Simulating ms_es_ordered_cas_by4_mul/i4d3  : PASS
+	Simulating ms_es_ordered_cas_by4_mul/i4d4  : PASS
+	Simulating ms_es_ordered_cas_by4_mul/i5d2  : PASS
+	Simulating ms_es_ordered_cas_by4_mul/i5d3  : PASS
+	Simulating ms_es_ordered_cas_by4_mul/i5d4  : PASS
+Done! :)

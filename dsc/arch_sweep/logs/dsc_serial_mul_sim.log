@@ -1,0 +1,14 @@
+Simulating dsc_serial_mul design
+	Simulating dsc_serial_mul/i2d2  : PASS
+	Simulating dsc_serial_mul/i2d3  : PASS
+	Simulating dsc_serial_mul/i2d4  : PASS
+	Simulating dsc_serial_mul/i3d2  : PASS
+	Simulating dsc_serial_mul/i3d3  : PASS
+	Simulating dsc_serial_mul/i3d4  : PASS
+	Simulating dsc_serial_mul/i4d2  : PASS
+	Simulating dsc_serial_mul/i4d3  : PASS
+	Simulating dsc_serial_mul/i4d4  : PASS
+	Simulating dsc_serial_mul/i5d2  : PASS
+	Simulating dsc_serial_mul/i5d3  : PASS
+	Simulating dsc_serial_mul/i5d4  : PASS
+Done! :)

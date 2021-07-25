@@ -1,0 +1,14 @@
+Simulating es_ordered_cas_mul design
+	Simulating es_ordered_cas_mul/i2d2  : PASS
+	Simulating es_ordered_cas_mul/i2d3  : PASS
+	Simulating es_ordered_cas_mul/i2d4  : PASS
+	Simulating es_ordered_cas_mul/i3d2  : PASS
+	Simulating es_ordered_cas_mul/i3d3  : PASS
+	Simulating es_ordered_cas_mul/i3d4  : PASS
+	Simulating es_ordered_cas_mul/i4d2  : PASS
+	Simulating es_ordered_cas_mul/i4d3  : PASS
+	Simulating es_ordered_cas_mul/i4d4  : PASS
+	Simulating es_ordered_cas_mul/i5d2  : PASS
+	Simulating es_ordered_cas_mul/i5d3  : PASS
+	Simulating es_ordered_cas_mul/i5d4  : PASS
+Done! :)
