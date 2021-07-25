@@ -1,12 +1,14 @@
-#!/usr/bin/python
+#!/misc/scratch/ajgrosze/ut_phd_research/dsc/arch_sweep/local_python/env/bin/python -B
 
 import csv
 import os
 import subprocess
 
+from helper_functions import *
+
 header_inputs = ["",2,'','','','','','','','',3,'','','','','','','','',4,'','','','','','','','',5,'','','','','','','','']
 header_bits   = [""] + [2,3,4 ,5 ,6 ,7 ,8 ,9 ,10]*4
-designs       = ["dsc_serial_mul","es_naive_mul","ms_serial_by2_mul","ms_es_naive_by2_mul"]
+#designs       = ["dsc_serial_mul","es_naive_mul","ms_serial_by2_mul","ms_es_naive_by2_mul"]
 #designs       = ["dsc_serial_mul"]
 
 cwd = os.getcwd()
@@ -18,7 +20,11 @@ latency    = []
 timing     = []
 power      = []
 
-for arch in designs:
+for arch in valid_designs:
+    pass_string = "Writing results from {} to csv".format(arch)
+    check_if_valid_design(arch,pass_string)
+    model_root = get_model_root()
+
     area_tot_temp = []
     area_gates_temp = []
     latency_temp = []
@@ -33,11 +39,12 @@ for arch in designs:
         for d in range(2,10+1):
             flavor = "i" + str(i) + "d" + str(d)
             #area
-            area_rpt = os.path.join(cwd,'build',arch,flavor,'synth','area.rpt')
-            cmd_area_tot = 'grep -A2 Instance ' + area_rpt + '| tail -n1 | awk \'{print $3}\''
+            area_rpt_name = arch + "_" + flavor + "_area.rpt"
+            area_rpt_path = os.path.join(model_root, "results_synth", area_rpt_name)
+            cmd_area_tot = 'grep -A2 Instance ' + area_rpt_path + '| tail -n1 | awk \'{print $3}\''
             area_tot_grep = os.popen(cmd_area_tot).read().rstrip()
             area_tot_temp.append(area_tot_grep)
-            cmd_area_gates = 'grep -A2 Instance ' + area_rpt + '| tail -n1 | awk \'{print $2}\''
+            cmd_area_gates = 'grep -A2 Instance ' + area_rpt_path + '| tail -n1 | awk \'{print $2}\''
             area_gates_grep = os.popen(cmd_area_gates).read().rstrip()
             area_gates_temp.append(area_gates_grep)
             #latency
@@ -49,13 +56,15 @@ for arch in designs:
                 lat = d
             latency_temp.append(lat)
             #worst case timing
-            timing_rpt = os.path.join(cwd,'build',arch,flavor,'synth','timing.rpt')
-            cmd_timing = 'grep setup ' + timing_rpt + '| tail -n1 | awk \'{print $5}\''
+            timing_rpt_name = arch + "_" + flavor + "_timing.rpt"
+            timing_rpt_path = os.path.join(model_root, "results_synth", timing_rpt_name)
+            cmd_timing = 'grep setup ' + timing_rpt_path + '| tail -n1 | awk \'{print $5}\''
             timing_grep = os.popen(cmd_timing).read().rstrip()
             timing_temp.append(timing_grep)
             #power
-            power_rpt = os.path.join(cwd,'build',arch,flavor,'synth','power.rpt')
-            cmd_power = 'grep -A2 Instance ' + power_rpt + '| tail -n1 | awk \'{print $5}\''
+            power_rpt_name = arch + "_" + flavor + "_power.rpt"
+            power_rpt_path = os.path.join(model_root, "results_synth", power_rpt_name)
+            cmd_power = 'grep -A2 Instance ' + power_rpt_path + '| tail -n1 | awk \'{print $5}\''
             power_grep = os.popen(cmd_power).read().rstrip()
             power_temp.append(power_grep)
             #energy - FIXME
